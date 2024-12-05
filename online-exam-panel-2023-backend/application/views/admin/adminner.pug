@@ -1,0 +1,97 @@
+extends layout
+
+block content
+
+    //- new session auto password modal 
+    #newSessionAuthPass.modal.fade(tabindex='-1' aria-labelledby='clearAllRecoresYesLabel' aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h1#clearAllRecoresYesLabel.modal-title.fs-5 Authentication 
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    label.mb-2(for='new-session-auth-password') Password
+                    input.form-control(type="password" id='new-session-auth-password' placeholder='**********')
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Cancel
+                    button.btn.btn-primary#clearAllRecoresAuthSubmit(type='button') Submit 
+
+
+    //- new session confirm modal 
+    #newSessionConfirmModal.modal.fade(tabindex='-1' aria-labelledby='newSessionConfirmModalLabel' aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h1#newSessionConfirmModalLabel.modal-title.fs-5 Info
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    p Are You Sure To Begin New Session?
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-bs-dismiss='modal') No 
+                    button.btn.btn-primary#clearAllRecoresYes(type='button') Yes
+
+
+    //- password authentication modal 
+    #pass-auth-modal.modal.fade(tabindex='-1' aria-labelledby='newExamStartLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+        .modal-dialog.modal-sm
+            .modal-content
+                .modal-header
+                    h1#newExamStartLabel.modal-title.fs-5 Authentication 
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    .d-flex.gap-3.flex-column
+                        label(for="") Password
+                        input.form-control#auth-password(type='password' placeholder='********' value='101')
+                        button.btn-sm.btn.btn-primary#auth-submit-btn(type='button') Submit 
+
+    .container-fluid
+        include includes/layout_nav.pug
+        .container
+            .row
+
+                .col-12
+                    div(role='tabpanel')
+                        ul.nav.nav-tabs(role='tablist')
+                            li.active(role='presentation')
+                                a(href='#home' aria-controls='home' role='tab' data-toggle='tab') Session Management
+                            li(role='presentation')
+                                a#uploadToMaster(href='#tab' aria-controls='tab' role='tab' data-toggle='tab') Upload To Master Server
+                        .tab-content
+                            .tab-pane.active#home(role='tabpanel')
+                                button#clearAllRecores.btn.btn-primary(type='button' data-bs-toggle='modal' data-bs-target='#newSessionConfirmModal') Start New Session
+
+                                //- button#clearAllRecores.btn.btn-warning.btn-sm(style='margin-top:25px;margin-left:25px;') Start New Session
+                            .tab-pane#tab(role='tabpanel')
+                                h4.text-success
+                                    caption
+                                        strong Completed Exams
+                                table.table.table-striped.table-bordered.table-hover
+                                    thead
+                                        tr
+                                            th(width='5%') Sr. No
+                                            th(width='20%') Exam Name
+                                            th(width='10%') Duration
+                                            th(width='15%') Batch No
+                                            th(width='30%') Action
+                                    tbody#done_exams_list_tbody
+                                        tr
+                                            td(colspan="10" style="text-align:center") No Exams Found
+
+block inline_css
+    style.
+        .nav-li{
+            color:red
+        } 
+block css_link
+    link(rel='stylesheet' href="/plugins/datatable/datatables.min.css")
+block js_link
+    script(src="/plugins/datatable/datatables.min.js")
+    script(src="/js/adminner.js")
+block inline_js
+    script.
+        $(document).ready(function() {
+            $('.adminner-active').addClass('active');
+        });
+
+
+

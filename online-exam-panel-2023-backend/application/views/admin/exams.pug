@@ -1,0 +1,193 @@
+extends layout
+
+block content
+	//- confirm modal
+	#confirmModal.modal.fade(tabindex='-1' aria-labelledby='confirmModalLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h1#confirmModalLabel.modal-title.fs-5
+					button.btn-close.close-confirm-modal(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+					p#confirm-modal-text 
+					div.d-flex.justify-content-end
+						button.me-2.btn.btn-outline-danger#confirm-no-btn(type='button' data-bs-dismiss='modal') No 
+						button.btn.btn-primary#confirm-yes-btn(type='button') Yes
+
+	//- exam backup modal
+	#examBackupModal.modal.fade(tabindex='-1' aria-labelledby='examBackupModalLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h1#examBackupModalLabel.modal-title.fs-5 End Slot & Backup
+					button.btn-close.close-backup-modal(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+
+					div.exam-complete-confirm
+						p Is Scheduled Exam Completed ? 
+						div.d-flex.justify-content-end
+							button.me-2.btn.btn-outline-secondary.close-backup-modal(type='button' data-bs-dismiss='modal') No 
+							button.btn.btn-primary#examCompletedConfirm(type='button') Yes
+
+					div.backup-confirm.d-none
+						p Are You Sure To Create Backup ?
+						div.d-flex.justify-content-end
+							button.me-2.btn.btn-outline-secondary.close-backup-modal(type='button' data-bs-dismiss='modal') No 
+							button.btn.btn-primary#examBackupConfirm(type='button') Yes
+					div.d-none.backup-password
+						label.mb-2(for='exam-backup-auth-password') Enter Password
+						input.form-control(type="password" id='exam-backup-auth-password' placeholder='**********')
+						div.d-flex.justify-content-end.mt-2
+							button.me-2.btn.btn-outline-secondary.close-backup-modal(type='button' data-bs-dismiss='modal') No 
+							button.btn.btn-primary#examCompletedConfirmAuthPass(type='button') Yes
+
+
+	//- students details modal
+	#studentsListModal.modal.fade(tabindex='-1' aria-labelledby='studentsListModalLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog.modal-fullscreen.modal-dialog-scrollable
+			.modal-content
+				.modal-header
+					h1#studentsListModalLabel.modal-title.fs-5 Students List
+					button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+					table.table.table-stripped.table-bordered.students-list-table.w-100
+						thead
+							tr
+								th.text-center(width="5%") Roll No
+								th Photo
+								th Sign
+								th Name
+								th Mobile
+								th Application No
+								th Post
+								th Password
+						tbody#students-details-tbody
+
+
+	//- mark absent students
+	#markAbsentModel.modal.fade(tabindex='-1' aria-labelledby='markAbsentModelLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h1#markAbsentModelLabel.modal-title.fs-5 Authentication
+					button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+					label.mb-2(for='mark-absent-auth-password') Password
+					input.form-control(type="password" id='mark-absent-auth-password' placeholder='**********')
+				.modal-footer
+					button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Cancel
+					button.btn.btn-primary.submitMarkAbsentBtn(type='button') Submit 
+
+
+
+	//- password authentication modal 
+	#pass-auth-modal.modal.fade(tabindex='-1' aria-labelledby='newExamStartLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog.modal-sm
+			.modal-content
+				.modal-header
+					h1#newExamStartLabel.modal-title.fs-5 Authentication 
+					button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+					.d-flex.gap-3.flex-column
+						label(for="") Password
+						input.form-control#auth-password(type='password' placeholder='********' value='101')
+						button.btn-sm.btn.btn-primary#auth-submit-btn(type='button') Submit 
+
+
+	//- download photo-sign status modal
+	#phot-sign-download-modal.modal.fade(tabindex='-1' aria-labelledby='newExamStartLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h1#newExamStartLabel.modal-title.fs-5 Progress 
+					button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+					p.fs-5.fw-bold.status-text Starting...
+
+	//- new exam start modal
+	#newExamStartAuthModal.modal.fade(tabindex='-1' aria-labelledby='newExamStartLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h1#newExamStartLabel.modal-title.fs-5 Authentication
+					button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+				.modal-body
+					label.mb-2(for='new-exam-auth-password') Password
+					input.form-control(type="password" id='new-exam-auth-password' placeholder='**********')
+				.modal-footer
+					button.btn.btn-primary#startExamSubmitBtn(type='button') Submit 
+
+	include includes/layout_nav.pug
+	.container-fluid.px-4
+
+		div.d-flex.justify-content-end.mt-3
+			button.mx-1#get-exam-list.btn.btn-primary.btn-sm(type='button') Get New Exam List
+			button.mx-1#agree.btn.btn-success.btn-sm.d-none(type='button') I Agree
+			button.mx-1#start_exam.btn.btn-success.btn-sm.d-none(type='button') Start Exam
+
+		.row.g-3
+
+			.col-12
+				h4.mb-3 Scheduled Exams
+				table.table.table-striped.table-bordered.table-hover
+					thead
+						tr.text-center
+							th(width='1%') #
+							th(width='5%') Exam Name
+							th(width='3%') Link
+							th(width='3%') Duration
+							th(width='5%') Batch No
+							th(width='5%') Attendance Started 
+							th(width='5%') Exam Started 
+							th(width='5%') Exam Back-Up 
+							th(width='5%') Exam Stopped
+							th(width='5%') Mark Absenty
+							th(width='5%') View Students
+
+					tbody#done_exams_list_tbody
+						tr
+							td(colspan="11" style="text-align:center") No Exams Found
+
+			.col-12
+				#new_exams_list_table
+					h4.mb-3 Unsaved Exams
+					table.table.table-striped.table-bordered.table-hover(style='width: 100% !important')
+						thead
+							tr.text-center
+								th Sr. No
+								th Exam Name
+								th Duration
+								th Batch No
+								th Exam Download
+								th Students Download
+								th Photo/Sign Download
+								th Final Publish
+						tbody#new_exams_list_tbody
+							tr
+								td(colspan="8" style="text-align:center") No Exams Found
+block inline_css
+	style.
+		.nav-li{
+			color:red
+		}
+
+block inline_js
+	link(rel="stylesheet" href="/plugins/datatable/datatables.min.css")
+	script(src='/plugins/datatable/datatables.min.js' defer)
+	script(src="/socket.io/socket.io.js") 
+	script.
+		function confirmCall(msg,return_data){
+			Lobibox.confirm({
+				msg: msg,
+				callback: function ($this, type, ev) {
+					return_data($this, type, ev);
+				}
+			});
+		}
+		let is_mock_mode = !{is_mock_mode}
+
+	script(src="/js/exams.exam.js" defer)
+
+
+
+

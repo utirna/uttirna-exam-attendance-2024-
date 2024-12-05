@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Values
+        link(rel='stylesheet', href="/bootstrap/css/bootstrap.min.css")
+    body  
+      .container-fluid
+          .row
+              .col-xs-7.col-sm-7.col-md-7.col-lg-7
+                  h3.text-success.text-center Type
+                  hr
+                  table.table.table-striped.table-bordered.table-hover
+                      thead
+                          tr
+                              th(width='5%') Name
+                      tbody
+                          if(list.length == 0)
+                          else
+                              each value,index in list
+                                  tr
+                                      td 
+                                        a(href="/admin/get-value/"+value.sl_post) #{value.sl_post}
+                                      
+              

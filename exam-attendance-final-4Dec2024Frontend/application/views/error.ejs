@@ -1,0 +1,82 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <title><%= typeof(title) === 'undefined' ? 'Utirna Page' : title %></title>
+
+
+
+  <link rel="stylesheet" href="/plugins/new/bs-5.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/javascripts/bootstrap/css/admin.style.css">
+  <link rel="stylesheet" href="/javascripts/alters/css/lobibox.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- JavaScript files -->
+  <script src="/plugins/new/jquery/jquery-3.3.1.min.js"></script>
+  <script src="/plugins/new/bs-5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+  <script src="/javascripts/alters/js/lobibox.min.js"></script>
+
+  <script>
+    function getUrl(){
+      return '/admin/';
+    }
+
+    function addLoading(){ 
+      $('#loading-container').removeClass('d-none'); 
+    }
+
+    function removeLoading(){ 
+      $('#loading-container').addClass('d-none'); 
+    }
+
+    function showModal(modalId){
+      $(`${modalId}`).modal('show');
+    }
+
+    function hideModal(modalId){
+      $(`${modalId}`).modal('hide');
+    }
+
+    var cc = <%= cc %>;
+    function confirmCall(msg, return_data){
+      Lobibox.confirm({
+        msg: msg,
+        callback: function ($this, type, ev) {
+          return_data($this, type, ev);
+        }
+      });
+    }
+
+    function prompt(text, place_holder, type, callback){
+      Lobibox.prompt(type, {
+        title: text,
+        attrs: {
+          placeholder: place_holder
+        },
+        callback: function($this, type, ev){
+          if ($this.getValue() === '') {
+            return false;
+          }
+          callback($this.getValue());
+        }
+      });
+    }
+  </script>
+</head>
+<body class="welcome" oncontextmenu="return false;" ondragstart="return false;" ondrop="return false;">
+  <div id="loading-container" class="loading d-none"></div>
+  <h1><%= message %></h1>
+<h2><%= error.status %></h2>
+<pre><%= error.stack %></pre>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+extends layout
+block aggrement_page_css_link
+    link(rel='stylesheet' href="/bootstrap/css/font-awesome.min.css")
+    link(rel='stylesheet' href='/bootstrap/css/common_styles.css')
+    link(rel='stylesheet' href='/bootstrap/css/agreement-view.css')
+block inline_css
+
+block content
+    .container-fluid
+        .row
+            .col-xs-8.col-sm-8.col-md-8.col-lg-8(style='margin-top: 10px;')
+                if(isSessionMessage)
+                    .alert.c-alert-msg(class=isSessionMessage.class)
+                        strong #{isSessionMessage.msg}
+                .panel.panel-info
+                    div.aggreement-heading 
+                        div(style='display: inline-block; vertical-align: middle;')
+                            div(style="display:inline-block;vertical-align: middle; margin-right: 2rem;")
+                                i.fa.fa-hourglass-start.fa-2x
+                            div(style="display:inline-block;vertical-align: middle;")
+                                span(style='display: inline-block; margin-bottom: 0.5rem;') You are about to start the exam  
+                                br
+                                span #{test_info.exam_info.test_name}
+
+                        div(style="display:inline-block; vertical-align: middle; float: right; margin-top: 4px;")
+                            span(style="display:inline-block; vertical-align: middle;") View Instruction Set ::&nbsp;
+                            span(style='display:inline-block; vertical-align: center;')
+                                select(style="display:inline-block; vertical-align: middle;" onchange="setAgreementTestLang(this,event)")
+                                    option(value="eng") English 
+                                    option(value="mar") मराठी 
+                    .panel-body
+                        #english.col-xs-12.col-sm-12.col-md-12.col-lg-12.set-bor(style='margin-top: 9px; padding: 1rem 3rem;')
+                            h2.instruction-heading Important Instructions  :- 
+                            ol
+                                li Candidates should not bring a calculator, electronic watch, Bluetooth, mobile phone, pager or
+                                    | other materials or any other documents to the examination center premises.
+                                li No one will be able to leave the Examination Hall from the start of the examination 
+                                    | till the end of the examination
+                                li The candidate has been temporarily given admission for the examination, assuming that all
+                                    | the information in the application form is correct. If at any stage the information filled 
+                                    | by the candidates is found to be incorrect or false, the candidate will be canceled and the 
+                                    | candidate himself responsible for the result. 
+                                li The signature signed by the candidate, the signature on the attendance sheet 
+                                    | at the time of examination and the signature signed in the application will be checked.
+                                    | If there is a discrepancy, his candidacy will be canceled at any stage.
+                                li If any candidate misbehaves at the examination center, action will be taken in accordance with 
+                                    | the appropriate law.
+                                li.text-warning(style='font-weight: bold;')  WARNING: The answer once given cannot be changed under any circumstances.
+                            hr    
+
+                            h2.instruction-heading General Instructions  :- 
+                            ol
+
+                                li Total duration of Exam is
+                                    strong #{test_info.exam_info.test_duration}
+                                li 
+                                    |There will be 
+                                    strong total #{test_info.exam_info.test_total_question} 
+                                    | questions for exam
+                                li 
+                                    |Each question is allotted 
+                                    strong #{test_info.exam_info.test_mark_per_q}
+                                    | &nbsp;for correct response.
+                                li
+                                    | Total marks for exam :&nbsp;
+                                    strong #{test_info.exam_info.test_total_marks}
+                                li
+                                    | Candidate will be awarded marks as stated above in instruction 
+                                    strong No.3
+                                    |&nbsp;for correct of each question.
+
+                                -const mt_is_negative = test_info.exam_info.mt_negativ_mark;
+                                if(mt_is_negative)
+                                    li
+                                        strong #{test_info.exam_info.mt_negativ_mark}
+                                        | &nbsp;mark will be deducted for indicating incorrect response
+                                        | for each question.
+                                else
+                                    li
+                                        strong No mark will be deducted
+                                        |&nbsp;for indicating incorrect response for each question.
+                                li
+                                    strong No deduction
+                                    |&nbsp;from the total score will be made if no response is indicated.
+
+                                li The clock will be set at the server. The countdown timer in the top right corner of screen will display the remaining time available for you to complete the examination. When the timer reaches zero, the examination will end by itself. You will not be required to end or submit your examination.
+                                li The Questions Palette displayed on the right side of screen will show the status of each question using one of the following symbols: 
+                                    ol
+                                        li
+                                            img(src="/img/exam_icon/visited_sq.png")
+                                            span  You have not answered the question.
+                                        li
+                                            img(src="/img/exam_icon/correct_sq.png")
+                                            span  You have answered the question.
+                                li
+                                    ol
+                                        li(style="color:red") To answer a question, do the following: 
+                                            ol(style="color:black")
+                                                li Click on the question number in the Question Palette at the right of your screen to go to that numbered question directly. Note that using this option does NOT save your answer to the current question.
+                                                li Click on 
+                                                    strong Save & Next
+                                                    |  to save your answer for the current question and then go to the next question.
+
+                                        li(style="color:red") Answering a Question:
+                                            ol(style="color:black")
+                                                li To select your answer, click on the button of one of the options.
+
+                                li
+                                    p(style='font-weight: 600;') Do not Close the Exam Window or try to Restart the System at the Examination Center .
+
+                                    p(style='font-weight: 600;') In Case of Restarting / Shutdown of Computer due to Technical Reasons, Immediately report the  same to the INVIGILATOR on Duty. Answers  already marked and Time of the Examination will be saved and the Candidate will be able to RESUME the Examination from the exact point that last appeared before him/her.
+
+                                    p(style='font-weight: 600;') Any Candidate attempting to Copy or found copying or referring to or found in possession of any printed / handwritten material, notes, books, mobile phone, or any electronic device etc. or helping or asking help from any other person in any manner or communicating by means of words, signs, gesture, codes and other similar acts to exchange, impact or acquire relevant information in the Examination Hall will be treated as adoption of unfair means in the Examination. HE / SHE shall be dealt with severely and punished sternly under the Rules and Regulation.
+
+                                li
+                                    strong.text-danger Warning : Once Answer Is Submitted, It Cannot Be Changed Under Any Circumstances.
+                            hr
+                            div(style='margin-top: 3px;')
+                                strong About using ROUGH SHEET  :- 
+                            ol
+                                li A Rough Sheet will be provided to the candidates for carrying out rough work, calculations, etc. during the Examination. Candidates are required to mention their Name, Roll Number, Registration Number, Exam Date and Batch Time on the Rough Sheet.
+                                li Rough Sheet needs to be returned to the Invigilator before leaving the Exam Hall/Room/Lab. The candidates shall not be permitted to carry the rough sheets used /unused while they leave the exam hall/room/labs.
+                            hr
+                            div(style='margin-top: 3px;')
+                                strong Maintenance of Discipline in the Examination Hall/Room/Lab :- 
+                                p(style="color:red;") Candidates should strictly follow the various written/verbal instructions and maintain discipline in the Examination Hall/Room/Lab. Candidates may be debarred / disqualified from the examination for any of the following reasons:
+                            ol
+                                li Attempting to take the examination on behalf of someone else i.e. Impersonations.
+                                li Giving or receiving assistance of any kind during the examination or communicating in any way with other candidates or with outsiders.
+                                li Tempering / attempting to tamper with the computer system or posing hindrance in the smooth conduct of the examination.
+                                li Leaving the examination centre without the permission of the invigilator.
+                                li Using prohibited aids or carrying banned items in the examination premises / room / hall / lab, such as mobile / cellular phones, I-pad, palmtop, pager, books, study material, printed or handwritten notes, pieces of paper, electronic diaries, scientific calculators, watch alarms, smart watches, Bluetooth,  hand bands, listening devices and recording or photographic devices or any kind of communication device/gadget, etc.
+                                li Attempting to copy examination questions and / or examination responses (in any format) from the fellow candidate / examinations centre.
+                                li Candidate misbehaving before, during or after the exams.
+                                li Candidate manhandling an Invigilator before, during or after the Exams, etc.
+                            p.text-danger(style="text-align: center;") 
+                                strong The Superintendent of Examination is authorized to expel a candidate from the Examination Centre on observing any misconduct by the Candidates. A Candidate so expelled must, before leaving the Examination Hall, submit to the Institute his/her explanation in writing through the Superintendent of Examination. Once a candidate is so expelled he/she may not be allowed to appear in the remaining papers of the examination.
+                            center
+                                p.text-warning(style="font-weight: 500;") 
+                                    strong SMOKING, CHEWING OF TOBACCO, BETEL INTOXICANT, CARRYING/USE OF MOBILE PHONES, ETC IS TOTALLY BANNED INSIDE THE EXAMINATION HALL / ROOM / LAB / CENTRE PREMISES.
+                        #marathi.hide.col-xs-12.col-sm-12.col-md-12.col-lg-12.set-bor(style='margin-top: 9px; padding: 1rem 3rem;')
+                            h2.instruction-heading महत्वाच्या सूचना  :- 
+                            ol
+                                li  उमेदवारांनी कॅल्क्युलेटर, इलेक्ट्रानिक वॉच, ब्ल्युटूथ, मोबाईल फोन, 
+                                    |पेजर अथवा अन्य साहित्य किंवा इतर कोणत्याही प्रकारचे कागदपत्रे परीक्षा केंद्राच्या आवारात आणू नयेत.
+                                li  परीक्षा सुरू झाल्यापासून परीक्षा संपेपर्यंत कोणालाही परीक्षा हॉलमधून बाहेर जाता येणार नाही.
+                                li  उमेदवारांने भरलेल्या अर्जातील सर्वं माहिती बरोबर आहे, असे गृहित धरून उमेदवारास सदर परीक्षेसाठी प्रवेश पत्र 
+                                    |देवून त्यास तात्पुरता प्रवेश देण्यात आलेला आहे. उमेदवारांने अर्जाव्दारे भरलेली माहिती कोणत्याही टप्प्यावर चुकीची 
+                                    |अगर खोटी आढळून आल्यास उमेदवाराची उमेदवारी रद्द होईल व होणार्या परिणामास उमेदवार स्वत: जबाबदार राहील. 
+                                li  उमेदवाराने या प्रवेशपत्रावर केलेली स्वाक्षरी, परीक्षेच्या वेळी उपस्थित पत्रकावर केलेली स्वाक्षरी व अर्जामध्ये केलेली स्वाक्षरी ही बरोबर 
+                                    |असल्याची खातरजमा केली जाईल. त्यात तफावत आढळून आल्यास त्याची उमेदवारी कोणत्याही टप्प्यावर रद्द होईल.
+                                li  परीक्षा केंद्रावर कोणत्याही उमेदवाराने गैरवर्तणूक केल्यास उचित कायद्यानुसार कार्यवाही करण्यात येईल.
+                                li
+                                    strong.text-danger  चेतावणी : एकदा दिलेले उत्तर कुठल्याही परिस्थितीत बदलता येणार नाही.
+                            hr
+                            h2.instruction-heading सामान्य सूचना: - 
+                            ol
+
+                                li परीक्षेचा एकूण कालावधी 
+                                    strong  #{test_info.exam_info.test_duration}
+                                    | आहे.
+                                li 
+                                    |परीक्षेसाठी   
+                                    strong एकूण #{test_info.exam_info.test_total_question} 
+                                    | प्रश्न असतील.
+                                li 
+                                    |प्रत्येक प्रश्नाला योग्य उत्तरासाठी  
+                                    strong #{test_info.exam_info.test_mark_per_q}
+                                    | &nbsp;गुण दिले आहेत.
+                                li
+                                    | परीक्षेसाठी एकूण गुण :&nbsp;
+                                    strong #{test_info.exam_info.test_total_marks}
+                                li
+                                    | प्रत्येक प्रश्नाच्या अचूकतेसाठी उमेदवारांना सूचना 
+                                    strong  क्रमांक 3 
+                                    |&nbsp; मध्ये नमूद केल्याप्रमाणे गुण देण्यात येतील.
+
+                                if(mt_is_negative)
+                                    li प्रत्येक चुकीच्या प्रतिसादासाठी 
+                                        strong #{test_info.exam_info.mt_negativ_mark}
+                                        strong &nbsp; गुण वजा केला जाईल.
+                                else
+                                    li  प्रत्येक प्रश्नास चुकीचे उत्तर दर्शविल्यास कोणतेही गुण वजा केले जाणार नाहीत.
+                                        strong गुण वजा केले जाणार नाहीत.
+
+                                li  कोणताही प्रतिसाद न दिल्यास एकूण स्कोअरमधून 
+                                    strong कोणतीही कपात केली जाणार नाही.
+
+                                li सर्व्हरवर घड्याळ सेट केले जाईल. स्क्रीनच्या वरच्या उजव्या कोपर्‍यातील काउंटडाउन टाइमर आपल्याला परीक्षा पूर्ण करण्यासाठी उर्वरित वेळ दर्शवेल. जेव्हा टायमर शून्यावर पोहोचेल तेव्हा परीक्षा स्वतःच संपेल. आपल्याला आपली परीक्षा संपविण्याची आवश्यकता नाही.
+                                li स्क्रीनच्या उजव्या बाजूला दर्शविलेले प्रश्न पॅलेट खालीलपैकी एक चिन्ह वापरून प्रत्येक प्रश्नाची स्थिती दर्शवेल:
+                                    ol
+                                        li
+                                            img(src="/img/exam_icon/visited_sq.png")
+                                            span  आपण प्रश्नाचे उत्तर दिले नाही.
+                                        li
+                                            img(src="/img/exam_icon/correct_sq.png")
+                                            span  आपण प्रश्नाचे उत्तर दिले आहे.
+                                li
+                                    ol
+                                        li(style="color:red") एखाद्या प्रश्नाचे उत्तर देण्यासाठी, पुढील गोष्टी करा: 
+                                            ol(style="color:black")
+                                                li त्या क्रमांकित प्रश्नावर थेट जाण्यासाठी आपल्या स्क्रीनच्या उजवीकडील प्रश्न पॅलेटमधील प्रश्न क्रमांकावर क्लिक करा. लक्षात ठेवा की हा पर्याय वापरल्याने आपले वर्तमान प्रश्नाचे उत्तर जतन होणार नाही.
+                                                li आपले उत्तर जतन करण्यासाठी सेव्ह आणि नेक्स्ट 
+                                                    strong.text-success सेव्ह आणि नेक्स्ट
+                                                    |  वर क्लिक करा आणि मग पुढच्या प्रश्नावर जा.
+
+                                        li(style="color:red") प्रश्नाचे उत्तर देण्याकरिता :
+                                            ol(style="color:black")
+                                                li आपले उत्तर निवडण्यासाठी, पर्यायांपैकी एका बटणावर क्लिक करा.
+
+                                li
+                                    strong 
+                                        p परीक्षा विंडो बंद करू नका किंवा परीक्षा केंद्रात सिस्टम रीस्टार्ट करण्याचा प्रयत्न करू नका.
+                                    strong    
+                                        p कोणत्याही उमेदवारांनी  कॉपी करण्याचा प्रयत्न केला किंवा संदर्भित आढळले किंवा कोणतीही छापील / हस्तलिखित सामग्री, नोट्स, पुस्तके, मोबाइल फोन किंवा कोणत्याही इलेक्ट्रॉनिक डिव्हाइस इत्यादी जवळ असल्याचे आढळले किंवा कोणत्याही प्रकारे एखाद्या व्यक्तीस मदत केली किंवा मदत मागितली किंवा संप्रेषण करुन शब्द, चिन्हे, जेश्चर, कोड आणि इतर समान कृती, परीक्षा हॉलमध्ये संबंधित माहितीची देवाणघेवाण, प्रभाव किंवा संपादन करण्यासाठी परीक्षेतील अनुचित मार्ग अवलंबल्यासारखे मानल्या जातील. नियमांनुसार त्यांच्यावर कठोर कारवाई केली जाईल.
+
+                                li
+                                    strong.text-danger चेतावणी: एकदा उत्तर सबमिट झाल्यावर ते कोणत्याही परिस्थितीत बदलले जाऊ शकत नाही.
+                            hr
+                            div(style='margin-top: 3px;')
+                                strong रफ शीट वापरण्याबद्दल: -
+                            ol
+                                li परीक्षेच्या वेळी उमेदवारांना रफ काम, गणिते वगैरे करण्यासाठी रफ शीट देण्यात येईल. उमेदवारांनी आपले नाव, रोल नंबर, नोंदणी क्रमांक, परीक्षेची तारीख आणि बॅच टाइम रफ शीट वर नमूद करणे आवश्यक आहे.
+                                li परीक्षा हॉल / कक्ष / लॅब सोडण्यापूर्वी रफ शीट परिवेक्षक कडे परत देणे आवश्यक आहे. उमेदवारांना परीक्षा हॉल / कक्ष / लॅब सोडताना वापरलेली / न वापरलेली रफ शीट नेण्याकरिता परवानगी दिली जाणार नाही.
+                            hr
+                            div(style='margin-top: 3px;')
+                                strong परीक्षा हॉल / कक्ष / लॅबमध्ये शिस्त राखणे: - 
+                                p(style="color:red;") उमेदवारांनी विविध लेखी / तोंडी सूचनांचे काटेकोरपणे पालन करावे व परीक्षा हॉल / कक्ष / लॅबमध्ये शिस्त राखली पाहिजे. उमेदवार खालीलपैकी कोणत्याही कारणास्तव परीक्षेमधून पदच्युत / अपात्र ठरले जाऊ शकतात:
+                            ol
+                                li दुसर्‍याच्या वतीने परीक्षा देण्याचा प्रयत्न करीत आहे.
+                                li परीक्षेच्या वेळी कोणत्याही प्रकारची मदत देणे किंवा प्राप्त करणे किंवा इतर उमेदवारांशी किंवा बाहेरील लोकांशी कोणत्याही प्रकारे संप्रेषण करणे.
+                                li संगणक प्रणालीत छेडछाड करणे / छेडछाड करण्याचा प्रयत्न करणे किंवा परीक्षेच्या सुरळीत चालण्यात अडथळा निर्माण करणे.
+                                li इनविजिलेटरच्या परवानगीशिवाय परीक्षा केंद्र सोडणे.
+                                li परीक्षेच्या आवारात / कक्ष / हॉल / लॅबमध्ये प्रतिबंधित वस्तूंचा वापर करणे किंवा मोबाइल / सेल्युलर फोन, आय-पॅड, पामटॉप, पेजर, पुस्तके, अभ्यासाची सामग्री, छापील किंवा हस्तलिखित नोट्स, कागदाचे तुकडे, इलेक्ट्रॉनिक डायरी, वैज्ञानिक कॅल्क्युलेटर, अलार्म पहा, स्मार्ट घड्याळे, ब्लूटूथ, हँड बँड, ऐकण्याचे उपकरणे आणि रेकॉर्डिंग किंवा छायाचित्रण उपकरणे किंवा कोणत्याही प्रकारचे संप्रेषण डिव्हाइस / गॅझेट इ.
+                                li परीक्षा केंद्रातून परीक्षा प्रश्न किंवा परीक्षा प्रतिसाद (कोणत्याही स्वरूपात) कॉपी करण्याचा प्रयत्न करणे.
+                                li परीक्षेच्या आधी किंवा दरम्यान उमेदवारांनी गैरवर्तन केले.
+                                li परीक्षेच्या आधी, दरम्यान किंवा नंतर उमेदवाराने इनविजिलेटरवर गैरवर्तन करणे इ.
+
+                                strong.text-danger उमेदवारांकडून होणाऱ्या कोणत्याही गैरप्रकारांचे निरीक्षण केल्यावर परीक्षा अधीक्षकांना परीक्षा केंद्रातून काढून टाकण्याचा अधिकार आहे. यातून हद्दपार झालेल्या उमेदवाराने परीक्षा हॉल सोडण्यापूर्वी, त्याचे स्पष्टीकरण अधीक्षक परीक्षेद्वारे लेखी स्वरूपात संस्थेला सादर केले पाहिजे. एकदा उमेदवाराला हद्दपार केल्यावर त्याला परीक्षेच्या उर्वरित पेपरमध्ये हजर राहू दिले जाऊ शकत नाही.
+                            center
+                                strong.text-warning धुम्रपान, टोबॅको, मोबाइल फोन पूर्णपणे परीक्षा हॉल / रूम / लॅब / केंद्रामध्ये बंदी घातली आहे
+                            hr    
+                            div(style='margin-top: 3px;')
+                        .clearfix
+                        h4(style="margin-left:30px;color:red") 
+                            p 
+                                strong#imp_note(style='letter-spacing: 0.5px; font-weight: 600;') Note: In case of difficulty due to technical reasons before   or after the examination is started, the candidate will be given the next time / date.
+                        .checkbox(style='margin-left: 4.5%')
+                        label
+                            input#is_agree(type='checkbox' value='' style="width:30px; height:30px;")
+                            strong#imp_i_agree_text(style="letter-spacing: 0.5px; font-weight: 600; font-size: 1.6rem; line-height: 2") &nbsp;&nbsp;I have read and understood the instructions. All computer hardware allotted to me are in proper working condition. I declare  that I am not in possession of / not wearing / not  carrying any prohibited gadget like mobile phone, bluetooth  devices  etc. /any prohibited material with me into the Examination Hall.I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Exam and/or to disciplinary action, which may include ban from future Tests / Examinations.
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                            center
+                                a.button1.button1--agree(href="/confirmtion?mac=00:00:00:00" onclick='hideMe(this,event)')
+                                    i.fa.fa-paper-plane  
+                                    |&nbsp; I agree and ready to begin
+                                a.button1.button1--agree.c_approveing.hide(href='javascript:void(0)' )
+                                    i.fa.fa-spinner.fa-spin
+                                    |&nbsp;Approving your request .....
+            .col-xs-4.col-sm-4.col-md-4.col-lg-4(style='margin-top: 10px;')
+                .panel.panel-info(style="position: fixed;width: 30%;")
+                    div.candidate-info-heading Candidate Information
+                    .panel-body
+                        if(stud_info.sl_image != '0')
+                            img.img-responsive(src=`/pics/_images/${stud_info.sl_image}`, alt=stud_info.sl_f_name style="width:100px;height:100px;margin:auto")
+                        else
+                            img.img-responsive(src="img/default.jpg" alt=stud_info.sl_f_name style="width:100px;height:100px;margin:auto")
+                        div.student-info-box
+                            h5 Roll No: #{stud_info.sl_roll_number}
+                            h5 Name: #{stud_info.sl_f_name} #{stud_info.sl_m_name} #{stud_info.sl_l_name}
+                            h5 Post: #{stud_info.sl_post}
+
+block inline_js
+    script(type='text/javascript').
+        var lang = 'eng';
+        function timeOut() {
+            setTimeout(function () {
+                $('.c-alert-msg').slideUp(750);
+            }, 3000);
+        }
+
+        timeOut();
+        function hideMe(_this, event) {
+            if ($('#is_agree').prop('checked') == false) {
+                $('#is_agree').siblings('strong').css('color', 'red');
+                $('#is_agree').siblings('strong').hide(200).show(200);
+                event.preventDefault();
+                return false;
+            } else {
+                $(_this).addClass('hide');
+                $('.c_approveing').removeClass('hide');
+            }
+        }
+        $('#is_agree').on('click', function (e) {
+        $('#is_agree').siblings('strong').css('color', 'black');
+        });
+        function setAgreementTestLang(_this,event){
+            if($(_this).val() == 'eng') 
+            {   
+                $('#imp_note').html('Note: In case of difficulty due to technical reasons before   or after the examination is started, the candidate will be given the next time / date.');
+                $('#marathi').addClass('hide');
+                $('#english').removeClass('hide');
+            }else{
+                $('#imp_note').html('नोट : परिक्षा सुरू झाल्यानंतर किंवा अगोदर काही तांत्रिक कारणामुळे अडचन आल्यास उमेदवारास पुढील वेळ/तारीख देण्यात येईल.');
+                $('#marathi').removeClass('hide');
+                $('#english').addClass('hide');
+            }
+        }

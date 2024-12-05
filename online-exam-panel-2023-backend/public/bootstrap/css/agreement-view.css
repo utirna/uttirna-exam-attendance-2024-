@@ -1,0 +1,62 @@
+.panel,
+.set-bor {
+  margin-top: 0%;
+  border: 2px solid #00434d;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+li,
+p,
+strong {
+  padding: 0.5% 2% !important;
+  line-height: 2 !important;
+  font-size: 1.6rem !important;
+}
+
+strong {
+  padding: 0 !important;
+}
+
+.instruction-heading {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.aggreement-heading {
+  background-color: #00434d;
+  padding: 1.2rem;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  margin: 0;
+}
+
+.candidate-info-heading {
+  background-color: #00434d;
+  padding: 1.2rem;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.aggreement-heading select {
+  color: #00434d;
+}
+
+.student-info-box {
+  margin-top: 3rem;
+}
+
+h5 {
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+}
+
+h5:last-child {
+  font-style: italic;
+}

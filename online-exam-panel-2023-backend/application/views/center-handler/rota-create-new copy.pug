@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    .container-fluid
+        .row
+          .col-7
+            h1 Center Detials Hander
+            .row
+              .form-group.col-12
+                input#centerName.form-control(type="text" value="Utirna Examinaton Unit" placeholder="Center Name")
+              .clearfix
+              hr
+              .form-group.col-4
+               label(for="") Depatrment
+               input.form-control#inputDepartment(type="text" placeholder="Add Depatrment")
+               table.table.table-bordered.bg-gray
+                 tbody.tbodyDepartment
+              .form-group.col-2
+               label(for="") Floor
+               input.form-control#inputFloor(type="text" placeholder="Add Foor")
+               table.table.table-bordered.bg-gray
+                 tbody.tbodyFloor
+              .form-group.col-3
+               label(for="") Enter Lab
+               input.form-control#inputLab(type="text" placeholder="Add New Lab")
+               table.table.table-bordered.bg-gray
+                 tbody.tbodyLab
+              .form-group.col-3
+                 label(for="") Total-Node
+                 input.form-control.tNode(type="text" placeholder="")
+                 label(for="") User-Node
+                 input.form-control.uNode(type="text" placeholder="" readonly="true")
+                 label(for="") Buffer-Node
+                 input.form-control.bfNode(type="text" placeholder="" readonly="true")
+          .col-5
+            h1 Graphical View
+            .row
+              .col-12
+                #masterTree
+block js_link
+    script(src="/js/rota/rota.hander.js")

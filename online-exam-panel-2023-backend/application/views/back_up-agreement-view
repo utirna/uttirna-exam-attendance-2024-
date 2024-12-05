@@ -1,0 +1,142 @@
+extends layout
+block aggrement_page_css_link
+    link(rel='stylesheet', href="/bootstrap/css/font-awesome.min.css")
+block inline_css
+    style(type='text/css').
+        ol li {
+        padding: 0.5% 2%;
+        font-size: 10.5pt;
+        }
+        .panel {
+        margin-top: 0%;
+        }
+        .set-bor {
+        border: 2px solid #000;
+        }
+block content
+    .container-fluid
+        .row
+            .col-xs-8.col-sm-8.col-md-8.col-lg-8(style='margin-top: 10px;')
+                if(isSessionMessage)
+                            .alert.c-alert-msg(class=isSessionMessage.class)
+                                strong #{isSessionMessage.msg}
+                .panel.panel-info
+                    .panel-heading
+                        h3.panel-title
+                            i.fa.fa-hourglass-start.fa-2x &nbsp;&nbsp;&nbsp;
+                            span You are about to start the exam of 
+                                strong #{test_info.exam_info.test_name}
+                    .panel-body
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12.set-bor
+                            div
+                                strong महत्वाच्या सूचना:-
+                            ol(style='')
+                                li
+                                    | उमेदवारांनी कॅल्क्युलेटर, इलेक्ट्रानिक वॉच, ब्ल्युटूथ, मोबाईल फोन, पेजर अथवा अन्य साहित्य किंवा इतर
+                                    | कोणत्याही प्रकारचे कागदपत्रे परीक्षा केंद्राच्या आवारात आणू नयेत.
+                                li
+                                    | परीक्षा सुरू झाल्यापासून परीक्षा संपेपर्यंत कोणालाही परीक्षा हॉलमधून बाहेर जाता येणार नाही
+                                li
+                                    | उमेदवारांने भरलेल्या अर्जातील सर्वं माहिती बरोबर आहे, असे गृहित धरून उमेदवारास सदर परीक्षेसाठी
+                                    | प्रवेश पत्र देवून त्यास तात्पुरता प्रवेश देण्यात आलेला आहे. उमेदवारांने अर्जाव्दारे भरलेली माहिती
+                                    | कोणत्याही टप्प्यावर चुकीची अगर खोटी आढळून आल्यास उमेदवाराची उमेदवारी रद्द होईल व होणार्‍या परिणामास
+                                    | उमेदवार स्वत: जबाबदार राहील.
+                                li 
+                                    | उमेदवाराने या प्रवेशपत्रावर केलेली स्वाक्षरी, परीक्षेच्या वेळी उपस्थित पत्रकावर केलेली स्वाक्षरी व
+                                    | अर्जामध्ये केलेली स्वाक्षरी ही बरोबर असल्याची खातरजमा केली जाईल. त्यात तफावत आढळून आल्यास त्याची
+                                    | उमेदवारी कोणत्याही टप्प्यावर रद्द होईल.
+                                li
+                                    | परीक्षा केंद्रावर कोणत्याही उमेदवाराने गैरवर्तणूक केल्यास उचित कायद्यानुसार कार्यवाही करण्यात येईल
+                            div(style='margin-bottom: 9px;')
+                                center
+                                    strong(style='color: red')
+                                        | नोट : परिक्षा सुरू झाल्यानंतर किंवा अगोदर काही तांत्रिक कारणामुळे अडचन आल्यास उमेदवारास पुढील
+                                        | वेळ/तारीख देण्यात येईल.
+
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12.set-bor(style='margin-top: 9px;')
+                            div(style='margin-top: 3px;')
+                                strong परीक्षाबाबत माहिती :- 
+                            ol
+                                li Total duration of exam is 
+                                    strong #{test_info.exam_info.test_duration}
+                                li 
+                                    |There will be 
+                                    strong total #{test_info.exam_info.test_total_question} 
+                                    |questions for exam
+                                li 
+                                    |Each question is allotted 
+                                    strong #{test_info.exam_info.test_mark_per_q}
+                                    |&nbsp;for correct response.
+                                li
+                                    |Total marks for exam is&nbsp;
+                                    strong #{test_info.exam_info.test_total_marks}
+                                li
+                                    |Candidate will be awarded marks as stated above in instruction 
+                                    strong No.3
+                                    |&nbsp;for correct of each question.
+                                
+                                -const mt_is_negative = test_info.exam_info.mt_negativ_mark;
+                                if(mt_is_negative)
+                                    li
+                                        strong #{test_info.exam_info.mt_negativ_mark}
+                                        |&nbsp;mark will be deducted for indicating incorrect response
+                                        |for each question.
+                                else
+                                    li
+                                        strong No mark will be deducted
+                                        |&nbsp;for indicating incorrect response for each question.
+                                li
+                                    strong No deduction
+                                    |&nbsp;from the total score will be made if no response is indicated.
+                        .clearfix
+                        .checkbox(style='margin-left: 4.5%')
+                        label
+                            input#is_agree(type='checkbox', value='')
+                            strong वरील सूचना मी वाचली असून ती मला मान्य आहे.
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                            center
+                                a.btn.btn-info(href="/confirmtion", style='padding: 10px 20%;', onclick='hideMe(this,event)')
+                                    i.fa.fa-paper-plane  
+                                    |&nbsp; I agree and ready to begin
+                                a.btn.btn-info.c_approveing.hide(href='javascript:void(0)', style='padding: 10px 20%;')
+                                    i.fa.fa-spinner.fa-spin
+                                    |&nbsp;Approving your request .....
+            .col-xs-4.col-sm-4.col-md-4.col-lg-4(style='margin-top: 10px;')
+                .panel.panel-info
+                    .panel-heading
+                        h3.panel-title 
+                            strong Student Information
+                    .panel-body
+                        if(stud_info.sl_image != '0')
+                            img.img-responsive(src=stud_info.sl_image, alt='Image',style="width:100px;height:100px;margin:auto")
+                        else
+                            img.img-responsive(src="img/default.jpeg", alt='Image',style="width:100px;height:100px;margin:auto")
+                        center(style="margin-top:5px;")
+                            h5(style="margin:auto")
+                                strong(style="margin:auto") #{stud_info.sl_f_name} #{stud_info.sl_m_name} #{stud_info.sl_l_name} (#{stud_info.sl_roll_number})
+                                br
+                                strong(style="margin:auto") 
+                                    i #{stud_info.sl_addmit_type}
+
+block inline_js
+    script(type='text/javascript').
+        function timeOut() {
+            setTimeout(function () {
+             $('.c-alert-msg').slideUp(750);
+            }, 3000);
+        }
+        timeOut();
+        function hideMe(_this, event) {
+            if ($('#is_agree').prop('checked') == false) {
+                $('#is_agree').siblings('strong').css('color', 'red');
+                $('#is_agree').siblings('strong').hide(200).show(200);
+                event.preventDefault();
+                return false;
+            } else {
+                $(_this).addClass('hide');
+                $('.c_approveing').removeClass('hide');
+            }
+        }
+        $('#is_agree').on('click', function (e) {
+        $('#is_agree').siblings('strong').css('color', 'black');
+        });

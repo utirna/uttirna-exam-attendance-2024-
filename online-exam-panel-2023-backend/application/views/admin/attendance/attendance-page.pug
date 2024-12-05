@@ -1,0 +1,126 @@
+//- doctype html
+//- html(lang="en")
+//-     head
+//-         meta(charset="UTF-8")
+//-         meta(name="viewport" content="width=device-width, initial-scale=1.0")
+//-         title Document
+
+//-         //- CSS FILES
+//-         link(href='assets/plugins/bootstrap-5.3.3-dist/css/bootstrap.min.css' rel='stylesheet')
+
+
+//-         //-External css
+
+//-         link(href='assets/css/attendence/attendence-page.css' rel='stylesheet')
+
+//-         //-- COMMON JS files
+
+//-         //- bootstrap 5.3.3dist
+//-         script(src='assets/plugins/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js')
+
+//-         //-alertjs
+//-         script(src='assets/plugins/sweetalert/sweetalert.min.js')
+//-         script(src='assets/js/alertjs.js')
+
+//-         //- COMMON JS files END
+
+//-         //-external js 
+
+//-         script(src='assets/js/attendence/attendence-page-handler.js' defer)
+
+extends ../layout
+block css_link
+    link(href='/assets/css/attendance-page.css' rel='stylesheet')
+block js_link
+
+    script(src='/plugins/sweetalert/sweetalert.min.js' defer)
+    script(src='/assets/js/alertjs.js' defer)
+    script(src='/assets/js/attendence-handler.js' defer)
+
+block content
+
+    body
+
+        section
+            .container 
+                .search-container 
+                    input(type='text' id='student-id' placeholder='Enter your id here')
+                    button(type='button' id='search-btn' class='btn btn-primary') 
+                        //- <i class="fa-solid fa-magnifying-glass"></i>
+                        span Search
+
+                .candidate-info-container.toggle-content
+                    .photo-signature-container
+                        .profile-container 
+                            img(src='https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg' )
+                        .sign-container 
+                            img(src='https://www.shutterstock.com/image-vector/fake-autograph-samples-handdrawn-signatures-600nw-2325821623.jpg')
+                    .details
+                        .info-container 
+                            .label Name 
+                            .value(id='name')  
+
+                        .info-container 
+                            .label Application No. 
+                            .value(id='application-number')  
+
+                        .info-container 
+                            .label Username 
+                            .value(id='username')  
+
+                        .info-container 
+                            .label Date of Birth 
+                            .value(id='dob') 
+
+                        .info-container 
+                            .label Post 
+                            .value(id='post') 
+
+                        .info-container 
+                            .label Batch 
+                            .value(id='batch') 
+
+                        .info-container 
+                            .label Exam Date
+                            .value(id='exam-date') 
+
+                    .camera-container
+
+                        .video-snap-container
+                            video(id="video")
+                            canvas(id='canvas' style="display:none;")
+                            #snapshot-div
+
+                        .camera-buttons 
+                            button.btn.btn-success(id='take-snap-btn') Take Snap 
+                            button.btn.btn-info.text-white(id='reset-btn') Reset
+
+                .status-buttons.toggle-content 
+                    button.btn.btn-success(id='mark-present-btn') Mark Present
+                    button.btn.btn-danger(id='reject-btn') Reject
+                    button.btn.btn-secondary(id='reset-page-btn') Reset Page
+
+                #loader-container
+                    svg.ip(viewbox='0 0 256 128' width='256px' height='128px' xmlns='http://www.w3.org/2000/svg')
+                        defs
+                            lineargradient#grad1(x1='0' y1='0' x2='1' y2='0')
+                                stop(offset='0%' stop-color='#5ebd3e')
+                                stop(offset='33%' stop-color='#ffb900')
+                                stop(offset='67%' stop-color='#f78200')
+                                stop(offset='100%' stop-color='#e23838')
+                            lineargradient#grad2(x1='1' y1='0' x2='0' y2='0')
+                                stop(offset='0%' stop-color='#e23838')
+                                stop(offset='33%' stop-color='#973999')
+                                stop(offset='67%' stop-color='#009cdf')
+                                stop(offset='100%' stop-color='#5ebd3e')
+                        g(fill='none' stroke-linecap='round' stroke-width='16')
+                            g.ip__track(stroke='#ddd')
+                                path(d='M8,64s0-56,60-56,60,112,120,112,60-56,60-56')
+                                path(d='M248,64s0-56-60-56-60,112-120,112S8,64,8,64')
+                            g(stroke-dasharray='180 656')
+                                path.ip__worm1(stroke='url(#grad1)' stroke-dashoffset='0' d='M8,64s0-56,60-56,60,112,120,112,60-56,60-56')
+                                path.ip__worm2(stroke='url(#grad2)' stroke-dashoffset='358' d='M248,64s0-56-60-56-60,112-120,112S8,64,8,64')
+
+
+                #initial-text.text-dark
+                    h1 Enter Student Id To Search

@@ -1,0 +1,15 @@
+.scrollToTop{
+	text-align:center;
+	text-decoration:none;
+	position:fixed;
+	bottom: 5px;
+	right:10px;
+	display:none;
+}
+a.scrollToTop i{
+	color:#1E62A5;
+}
+a.scrollToTop i:hover{
+	color:#F12828;
+
+}

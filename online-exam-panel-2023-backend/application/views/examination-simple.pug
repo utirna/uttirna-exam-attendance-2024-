@@ -1,0 +1,255 @@
+extends layout
+
+block inline_css
+        style(type='text/css').
+            .set_profile_size{
+                max-height: 70px;
+                max-width: 70px;
+                min-width: 70px;
+                min-height: 70px;
+            }
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(1,1,1); /* Fallback color */
+                -moz-opacity: 0.90;
+                opacity:.90;
+                filter: alpha(opacity=90);
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 30%; /* Could be more or less, depending on screen size */
+            }
+
+            #close-yes{
+                color: white;
+                background-color: green;
+            }
+
+            #close-no{
+                color: white;
+                background-color: red;
+            }
+
+block test_css_link
+        link(rel='stylesheet', href="/bootstrap/css/font-awesome.min.css")
+        link(rel='stylesheet', href="/bootstrap/css/test.css")
+        link(rel='stylesheet', href="/javascripts/alters/css/lobibox.min.css")
+
+block js_link
+        script(src="/javascripts/exam-js/atob.js")
+        script(src="/javascripts/exam-js/new.test.js")
+        script(src="/javascripts/alters/js/lobibox.min.js")  
+
+block inline_js
+        script(type="text/javascript").
+            var _t_s_i = !{JSON.stringify(test_session_info)};//test_sesion_info 
+            var tbi = !{JSON.stringify(test_basic_info)};//test_basic_info
+            var qts = !{JSON.stringify(question_paper)};//question for test
+            var user_is_new = 1;
+            var _test_mode = 2;
+            var _min = #{_min};
+            var _sec = #{_sec};
+            var _moblile_num = "";
+            var _roll_num = "";
+            var _orignal_test_id = #{orignal_test_id};
+            var _orignal_publish_id = #{orignal_publish_id};
+            var _orignal_student_id = #{orignal_student_id};
+            var _id = #{orignal_student_id};
+            var time_to_save_data = 5;
+            var question_per_time_sec = 0; 
+            var index_of_question_global = 0;
+            function _getUrl(){return 'http://localhost:3000/';}
+
+
+            //- $question_pallet_height = $(document).height()/2;
+            //- $question_btn_pallet_height =  $(document).height()/3.5;
+            //- $('#main-pater-row').height($question_pallet_height);
+            //- $('.question-btn').height($question_btn_pallet_height);
+            var defult_font = 12;
+            function setFont(_this,event,type){
+                console.log(type);
+                switch (type) {
+                case 'add':
+                    if (defult_font < 20) {
+                    defult_font+=2;
+                    }
+                    break;
+                case 'sub':
+                    if (defult_font > 12) {
+                        defult_font-=2;
+                    }
+                    break;
+                default:
+                    defult_font = 12;
+                    break;
+                }
+                    $('#main-pater-row p').css('font-size',defult_font+'pt');
+                    $('#main-pater-row h5').css('font-size',defult_font+'pt');
+                    $('#main-pater-row label').css('font-size',defult_font+'pt');
+            }
+            var is_time_pause = false;
+            function confirmCall(msg,return_data){
+                Lobibox.confirm({
+                    msg: msg,
+                    callback: function ($this, type, ev) {
+                        return_data($this, type, ev);
+                    }
+                });
+            }
+            function retryMsg(msg,callback){
+                    Lobibox.alert('info', {
+                            msg: msg,
+                            buttons: {
+                                        ok: {
+                                            'class': 'btn btn-info',
+                                            closeOnClick: false
+                                        }
+                            },
+                            callback: function(lobibox, type){
+                            callback(type)
+                            }
+                        });
+            } 
+
+block content
+        .container-fluid
+            // question set
+            .row.test-area 
+                .col-xs-9.col-sm-9.col-md-9.col-lg-9
+                    #id_exam_title_and_time.row.bg-primary
+                        .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                            h3#i-test-name -
+                        .col-xs-6.col-sm-6.col-md-6.col-lg-6.pull-right
+                            h3.pull-right(style="margin-left:20px;")
+                                i.fa.fa-info-circle
+                            h3.pull-right
+                                i.fa.fa-clock-o.fa-lg
+                                span#i-test-timer 00:00
+                    .row.bg-primary       
+                        #id_exam_chapter_dispay.col-xs-12.col-sm-12.col-md-12.col-lg-12
+                            span(style="display:inline-block") 
+                                i.fa.fa-chevron-circle-right
+                            ul.list-inline
+                                li
+                                    a(href='#' title="Physics") Physics
+                                    | &nbsp;
+                                    i.fa.fa-info-circle
+                                li
+                                    a(href='#' title="Chemistry") Chemistry
+                                    | &nbsp;
+                                    i.fa.fa-info-circle
+                                li
+                                    a(href='#' title="Maths") Maths
+                                    | &nbsp;
+                                    i.fa.fa-info-circle
+                                li
+                                    a(href='#' title="Biology") Biology
+                                    | &nbsp;
+                                    i.fa.fa-info-circle
+                         
+                    .row
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12.question-panel-1(style='min-width: 800px;')
+                            div(style='display: inline;margin-top: 100px;')
+                                span.label.btn-black.btn-sm(style='padding: 10px;')
+                                   strong#i-question-number -
+                            strong#i_test_type_text(style='text-align:center;margin-left: 38%;color:#ffffff')
+                            span.btn.btn-gray.pull-right.btn-sm(style='margin-right: 2px;', onclick="setFont(this,event,'add')") A+
+                            span.btn.btn-gray.pull-right.btn-sm(style='margin-right: 2px;', onclick="setFont(this,event,'0')") A
+                            span.btn.btn-gray.pull-right.btn-sm(style='margin-right: 2px;', onclick="setFont(this,event,'sub')") A-
+                    .row
+                        #main-pater-row.main-pater-row(style='min-width: 799px;')
+                    .row
+                        #footer.col-xs-12.col-sm-12.col-md-12.col-lg-12(style='min-width: 800px;')
+                            button#i_test_previous_question.btn.btn-primary.btn-sm(type='button', name='button')
+                                i.fa.fa-backward
+                                | &nbsp;&nbsp;Previous
+                            //- button#i_test_unmark_for_review.btn.btn-danger.btn-sm(type='button', name='button')
+                            //-     i.fa.fa-history
+                            //-     | &nbsp;Un-mark Review
+                            button#i_test_unmark_for_review.btn.btn-danger.btn-sm(type='button', title='Unmark This Question Form Review', style='background-color: #546292 !important;margin-left:5px; ', name='button')
+                                i.fa.fa-history
+                                | &nbsp;Un-mark
+                            button#i_test_mark_for_review.btn.btn-warning.btn-sm.antic(type='button', title='Mark This Question For Review', name='button',style="margin-left:5px;")
+                                i.fa.fa-history
+                                | &nbsp;Review
+                            .col-xs-4.col-sm-4.col-md-4.col-lg-4.pull-right
+                                button#i_test_save_next.btn.btn-primary.btn-sm.pull-right(type='button', name='button', style='margin-left: 10px')
+                                    | Next&nbsp;&nbsp;
+                                    i.fa.fa-forward
+                                button#i_test_save_only.btn.btn-success.btn-sm.pull-right.hide(type='button', name='button')
+                                    i.fa.fa-save
+                                    | &nbsp;&nbsp;Save & Next
+                                | &nbsp;&nbsp;
+                                button#i_test_save_only-12.btn.btn-success.btn-sm.pull-right.hide(type='button', name='button') 
+                                    i.fa.fa-save
+                                    | &nbsp;&nbsp;Save
+                                | &nbsp;&nbsp;
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3.test-other-part
+                    .row
+                        .col-xs-3.col-sm-4.col-md-4.col-lg-4.pull-left
+                            img.img-responsive(src='./img/student/2018/01/sumit_9698.jpg', alt='Image', style='width:70;height:70;margin:auto')
+                        .col-xs-8.col-sm-8.col-md-8.col-lg-8
+                            strong
+                                span(style="color:#b31414") &nbsp; VijayKumar Yedle
+                                br
+                            strong(style='display: inline;')
+                                | Roll No:
+                                span(style="color:#b31414") SW18758458 
+                                br
+                            strong(style='display: inline;') Applied For: 
+                                span(style="color:#b31414") Stream_name
+                                br
+                    .row
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12.question-numbers
+                            p(style='text-align:center;margin-top:0.5%')
+                                strong#i-question-palet 40 Questions
+                            #question-btn.col-xs-12.col-sm-12.col-md-12.col-lg-12.question-btn.scrollbar
+                    .row
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12.info-buttons
+                        
+                            .col-xs-6.col-sm-6.col-md-6.col-lg-6.calc-list(style='margin-bottom: 15px')
+                                span.ans_done_lable(name='button', style='width:35px;padding: 8px;')
+                                    span#q-ans-done 20
+                                    | &nbsp;
+                                span(style='margin-top: 7px') Solved
+                            .col-xs-6.col-sm-6.col-md-6.col-lg-6.calc-list
+                                span.ans_not_done_lable(name='button', style='width:35px;padding: 8px;color:#fff !important;background-color: #fffefe !important;border: 1px solid #000')
+                                    span#q-not-done 15
+                                | &nbsp;
+                                span(style='margin-top: 7px') UnSolved
+                            .col-xs-12.col-sm-12.col-md-12.col-lg-12.calc-list(style='margin-bottom: 15px')
+                                span.ans_review_lable(name='button', style='width:35px;padding: 8px;')
+                                    span#q-nans-review 15
+                                | &nbsp;
+                                span(style='margin-top: 7px') Marked For Review
+                                br
+                            .col-xs-12.col-sm-12.col-md-12.col-lg-12.calc-list(style='margin-bottom: 15px')
+                                span.ans_review_done_lable(name='button', style='width:35px !important;padding: 8px;')
+                                    span#q-ans-review 15
+                                | &nbsp;
+                                span(style='margin-top: 7px') Ans &amp; Marked Review
+                    .row
+                        .col-xs-12.col-sm-12.col-md-12.col-lg-12(style="margin:auto")
+                            button#i-submit-test.btn.btn-success(type='button', name='button')
+                                i.fa.fa-cloud-upload
+                                strong END EXAM
+            #myModal.modal
+                .modal-content
+
+                
+                    
+
+                            

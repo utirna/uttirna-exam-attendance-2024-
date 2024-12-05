@@ -1,0 +1,91 @@
+extends layout
+block aggrement_page_css_link
+    link(rel='stylesheet' href="/bootstrap/css/font-awesome.min.css")
+    link(rel='stylesheet' href="/bootstrap/css/common_styles.css")
+block inline_css
+    style(type='text/css').
+        a {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 20pt !important;
+        }
+
+        .container--base {
+            height: 100vh; 
+            border: 4px solid purple;
+        }
+
+        .container--primary  {
+            -ms-transform: translateY(50%);
+            transform: translateY(50%);
+            max-width: 80rem;
+            
+        }
+        .main-body {
+            
+        }
+
+block content
+
+    .container--primary
+        .main-body
+            h3.auth-forms-heading
+                i.fa.fa-flag-checkered 
+                |&nbsp;&nbsp;&nbsp;
+                span Get Set Go
+            if(is_test_new)
+                center
+                    h3 
+                        |You are about to start this Exam in
+                        span#time 
+                            <strong class="text-danger"> 10 Seconds</strong>
+                        |,
+                    h3
+                        i.fa.fa-thumbs-up &nbsp; 
+                        |Best of Luck from our team.
+                a.button1.button1--start-exam.col-xs-12.col-sm-12.col-md-12.col-lg-12.c_approveing_1(href='/test' style='padding: 20px;font-size: 40px !important;' onclick='hideMe(this,event)') 
+                    i.fa.fa-clock-o &nbsp;
+                    |Start Exam 
+                a.btn.button1.button1--starting-exam.col-xs-12.col-sm-12.col-md-12.col-lg-12.c_approveing.hide(href='javascript:void(0)' style='padding: 20px;font-size: 40px !important;')
+                    i.fa.fa-spinner.fa-spin
+                    |&nbsp;Starting your Exam ..... 
+            else
+                center
+                    h3 
+                        |You are about to 
+                        strong RESUME 
+                        |this Exam in
+                        span#time 
+                            <strong class="text-danger"> 10 Seconds</strong>
+                        |, hope you are doing well !!!
+                    h3  
+                        i.fa.fa-thumbs-up &nbsp;&nbsp;&nbsp;
+                        |  Best of Luck from our team.
+                a.btn.btn-info.col-xs-12.col-sm-12.col-md-12.col-lg-12.c_approveing_1(href='/test' style='padding: 20px;font-size: 40px !important;' onclick='hideMe(this,event)') 
+                    i.fa.fa-history &nbsp;
+                    | Resume Exam
+                a.btn.button1.button1--resuming-exam.col-xs-12.col-sm-12.col-md-12.col-lg-12.c_approveing.hide(href='javascript:void(0)' style='padding: 20px;font-size: 40px !important;')
+                    i.fa.fa-spinner.fa-spin
+                    |&nbsp;Resuming your Exam .....
+block inline_js
+    script(type='text/javascript').
+        var time = 10;
+        var is_done = false;
+        setInterval(function () {
+            if(!is_done){
+                if(time > -1){
+                    $('#time').html('<strong class="text-danger">&nbsp'+time+' Seconds</strong>');
+                    time -= 1;
+                }else{
+                    is_done = true;
+                    $('.c_approveing_1').addClass('hide');
+                    $('.c_approveing').removeClass('hide');
+                        location.replace('/test');
+                }
+
+            }
+        },1000);   
+        function hideMe(_this,event){
+            $(_this).addClass('hide');
+            $('.c_approveing').removeClass('hide');
+        }

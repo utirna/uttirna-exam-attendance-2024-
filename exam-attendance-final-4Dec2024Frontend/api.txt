@@ -1,0 +1,6 @@
+
+
+server connection
+
+/ check connection -> return connection okay
+

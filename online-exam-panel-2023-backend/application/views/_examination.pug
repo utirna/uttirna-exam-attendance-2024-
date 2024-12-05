@@ -1,0 +1,19 @@
+extends layout
+block aggrement_page_css_link
+    link(rel='stylesheet', href="/bootstrap/css/font-awesome.min.css")
+block inline_css
+    style(type='text/css').
+        a {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 20pt !important;
+        }
+block content
+    .row
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
+            .form-group
+                label(for='') Data Entry
+                input#id_data_to_send.form-control(type='text', placeholder='Enter Data')
+                button#send_data.btn.btn-primary Click Me
+                label#id_data(for='') ___
+                

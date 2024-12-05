@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(http-equiv='Cache-control' content='no-cache')
+    meta(http-equiv='Expires' content='-1')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0')
+    title Center Details
+
+    block test_css_link
+
+    link(rel='stylesheet' href="/javascripts/bootstrap/css/admin.style.css")
+    link(rel='stylesheet' href="/plugins/new/bs-5.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href="/plugins/font-awesome470/css/font-awesome.css")
+    link(rel='stylesheet' href="/plugins/treeflex/treeflex.css")
+    link(rel='stylesheet' href="/plugins/treemaster/tree.css")
+    block aggrement_page_css_link
+    block inline_css
+    script(src="/plugins/new/jquery/jquery-3.3.1.min.js")
+    script(src="/plugins/new/bs-5.3.2/js/bootstrap.min.js")
+
+    script(src='/plugins/notify.js/notify.min.js')
+    block inline_js
+
+    script.
+      function addLoading(){ 
+        console.log('Loading added')
+        $('#loading-container').removeClass('d-none'); 
+      }
+      function removeLoading(){ 
+        console.log('Loading removed')
+        $('#loading-container').addClass('d-none'); 
+      }
+
+    block js_link
+
+  body.welcome(oncontextmenu="return false;")
+    #loading-container.loading.d-none
+    include ../admin/includes/layout_nav.pug
+    block content

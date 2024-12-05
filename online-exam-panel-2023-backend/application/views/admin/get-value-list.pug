@@ -1,0 +1,54 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Values
+        link(rel='stylesheet', href="/bootstrap/css/bootstrap.min.css")
+    body  
+      .container-fluid
+          .row
+              .col-xs-7.col-sm-7.col-md-7.col-lg-7
+                  h3.text-success.text-center Values of #{batch}
+                  hr
+                  table.table.table-striped.table-bordered.table-hover
+                      thead
+                          tr
+                              th(width='5%') Roll No
+                              th(width='15%') Name
+                              th(width='10%') Post
+                              th(width='10%') Value
+                      tbody
+                          if(list.length == 0)
+                              
+                          else
+                              
+                              each value,index in list
+                                  
+                                  tr
+                                      td #{value.roll_no}
+                                      td #{value.sl_f_name}  #{value.sl_m_name}  #{value.sl_l_name}
+                                      td #{value.sl_post}
+                                      td #{value.marks}
+              .col-xs-5.col-sm-5.col-md-5.col-lg-5
+                  h3.text-success.text-center Values of #{batch}
+                  hr
+                  table.table.table-striped.table-bordered.table-hover
+                      thead
+                          tr
+                              td(width='5%')                  
+                                form(action="/admin/set-value", method="post") 
+                                  .form-group
+                                    label Value Id
+                                    input.form-control(type="number", placeholder="Id" name="id")
+                                  .form-group
+                                    label Correct Value
+                                    input.form-control(type="number", placeholder="Correct" name="c")
+                                  .form-group
+                                    label In Correct Value
+                                    input.form-control(type="number", placeholder="Incorrect" name="i")
+                                  .form-group
+                                    button.btn.btn-success(type="submit") Submit
+                                    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    button.btn.btn-danger(type="submit") Reset
+              

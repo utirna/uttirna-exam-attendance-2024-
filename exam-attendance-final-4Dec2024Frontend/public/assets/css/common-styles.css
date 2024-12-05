@@ -1,0 +1,41 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.button {
+	border-radius: 5px !important;
+	outline: none;
+	border: none;
+	padding: 0.7rem 0.9rem;
+    transition: all 300ms;
+
+    font-weight: 500;
+}
+
+.button-primary {
+	background-color: rgb(250, 167, 14);
+}
+
+.button-primary:hover {
+	background-color: rgb(209, 142, 18);
+}
+
+.button-secondary {
+	background-color: rgb(14, 250, 85);
+}
+
+.button-secondary:hover {
+	background-color: rgb(15, 216, 75);
+}
+
+.button-danger {
+	background-color: rgb(218, 34, 34);
+	color: #fff;
+}
+
+.button-danger:hover {
+	background-color: rgb(182, 41, 41);
+	color: #fff;
+}

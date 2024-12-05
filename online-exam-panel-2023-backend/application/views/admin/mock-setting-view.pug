@@ -1,0 +1,36 @@
+extends layout
+
+block js_link
+	script(src='/plugins/jquery-validate/jquery.validate.min.js')
+	script(src='/js/admin/mock-handler.js')
+
+block content
+	include includes/layout_nav.pug
+	.container.mt-4
+		h5 Generate Mock Test
+		form#mock-setting-form
+			.row.g-4
+				.col-3.position-relative
+					label(for="total-questions") Total Questions
+					input.form-control#total-questions(type="number" name='total-questions' placeholder="eg. 90")
+				.col-3.position-relative
+					label(for="total-candidates") Total Candidates
+					input.form-control#total-candidates(type='number' name='total-candidates' placeholder="eg. 250") 
+				.col-3.position-relative
+					label(for="test-duration") Exam Duration (Min)
+					input.form-control#test-duration(type="number" name='test-duration' placeholder="eg. 90")
+				.col-3.position-relative
+					label(for="total-marks") Total Marks
+					input.form-control#total-marks(type="number" name='total-marks' placeholder="eg. 100")
+				.col-12
+					.d-flex.gap-2
+						button.btn.btn-primary.btn-sm#submit-mock-btn(type='submit') Generate mock
+							.spinner-border.spinner-border-sm.ms-2#submit-mock-btn-loader(role='status')
+								span.visually-hidden Loading...
+
+						button.btn.btn-outline-danger.btn-sm#submit-mock-btn(type='reset') Reset
+
+
+
+
+

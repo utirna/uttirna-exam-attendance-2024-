@@ -1,0 +1,84 @@
+extends layout
+
+block js_link
+	script(src='/js/admin/login-handler.js')
+
+block content
+	.container-fluid
+		//- Login req modal
+		#modalReqLogin.modal.fade(tabindex='-1' aria-labelledby='ipModal' aria-hidden='true')
+			.modal-dialog
+				.modal-content
+					.modal-header
+						h1#ipModal.modal-title.fs-5 Request To Master Server
+						button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+					.modal-body
+						.form-group
+							input#centerCode.form-control(type='number' require='true' placeholder='Enter Center Code')
+
+					.modal-footer
+						button#requestCenterCode.btn.btn-primary(type='button') Request For Login Details
+
+
+		//-  ip set modal
+		#modalIdIp.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+			.modal-dialog
+				.modal-content
+					.modal-header
+						h1#exampleModalLabel.modal-title.fs-5 Set Master Server IP URL
+						button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+					.modal-body
+						.form-group
+
+							label.mb-2(for='ip-master') Master IP
+							input.mb-3#ip-master.form-control(type='text' require='true' placeholder='eg. 192.168.1.5:81/abc/')
+
+							label.mb-2(for='ip-form-filling') Form Filling IP
+							input.form-control#ip-form-filling(type='text' require='true' placeholder='eg. 192.168.1.5:81/abc/')
+
+							p.fs-6.mt-3.mb-0.text-danger 
+								| Note: 
+								span.text-decoration-underline http:// 
+								| will get append automatically.
+
+					.modal-footer
+						button#requestUpdateIP.btn.btn-primary(type='button') Update IP
+
+
+		.container.w-50
+			.row(style="margin-top:90px;")
+				.col-12
+					.panel.panel-success
+						.panel-heading
+							.d-flex.justify-content-between.align-items-center
+								h3.panel-title Sign In
+								div.d-flex.align-items-center.gap-1
+									label(for="") Mock mode 
+									button.btn.mock-mode-btn.d-flex.align-items-center
+										i(class="fa-solid fa-toggle-on mock-on d-none  fa-2x fs-5")
+										i(class="fa-solid fa-toggle-off mock-off fa-2x fs-5")
+
+						.panel-body
+							form#admin-login-form
+								.d-flex.justify-content-between
+									legend.text-danger 
+										strong Server Access (Strictly Authorised Person)
+
+								.form-group
+									label.mb-2(for='user_name') Username
+									input.mb-3.form-control(type='text' id='user_name' name="user_name" require='true' placeholder='username' value="utr")
+								.form-group
+									label.mb-2(for='password') Password
+									input.mb-3.form-control(type='password' id='password' name="password" require='true' placeholder='*******' value="utr")
+								div.d-flex.mt-3.justify-content-between
+									div 
+										button.btn.btn-primary(type='submit') Sign In
+									div 
+										button.btn.btn-danger(type='button' data-bs-toggle='modal' data-bs-target='#modalIdIp') Set Master IP
+									div 
+										button.btn.btn-outline-secondary.text-secondary(type='button' data-bs-toggle='modal' data-bs-target='#modalReqLogin') Request For Login
+
+
+
+
+

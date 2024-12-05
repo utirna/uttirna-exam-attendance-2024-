@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Cache-control" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+
+    <title><%= typeof(title) === 'undefined' ? 'Utirna Page' : title %></title>
+
+    <link rel="stylesheet" href="/plugins/new/bs-5.3.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/javascripts/bootstrap/css/admin.style.css" />
+    <link rel="stylesheet" href="/javascripts/alters/css/lobibox.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- JavaScript files -->
+    <script src="/plugins/new/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/plugins/new/bs-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+    <script src="/javascripts/alters/js/lobibox.min.js"></script>
+
+    <script>
+      function getUrl(){
+          return '/admin/';
+      }
+
+      function addLoading(){
+          $('#loading-container').removeClass('d-none');
+      }
+
+      function removeLoading(){
+          $('#loading-container').addClass('d-none');
+      }
+
+      function showModal(modalId){
+          $(`${modalId}`).modal('show');
+      }
+
+      function hideModal(modalId){
+          $(`${modalId}`).modal('hide');
+      }
+
+      var cc = <%= cc %>;
+      function confirmCall(msg, return_data){
+          Lobibox.confirm({
+              msg: msg,
+              callback: function ($this, type, ev) {
+                  return_data($this, type, ev);
+              }
+          });
+      }
+
+      function prompt(text, place_holder, type, callback){
+          Lobibox.prompt(type, {
+              title: text,
+              attrs: {
+                  placeholder: place_holder
+              },
+              callback: function($this, type, ev){
+                  if ($this.getValue() === '') {
+                      return false;
+                  }
+                  callback($this.getValue());
+              }
+          });
+      }
+    </script>
+
+    <script src="/js/student.attendance.js" defer></script>
+  </head>
+  <body
+    class="welcome"
+    oncontextmenu="return false;"
+    ondragstart="return false;"
+    ondrop="return false;"
+  >
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+        <div
+          class="col-xs-8 col-sm-8 col-md-8 col-lg-8"
+          style="margin-top: 10px"
+        >
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Student Attendance</h3>
+            </div>
+            <div class="panel-body">
+              <table
+                class="table table-bordered table-striped table-hover"
+                style="font-size: 16px"
+              >
+                <tbody>
+                  <tr>
+                    <th width="20%">Application No ::</th>
+                    <td width="50%">
+                      <input
+                        id="applicant_id"
+                        type="text"
+                        placeholder="Applicant Id"
+                      />
+                      <button
+                        id="getStudentInfo"
+                        class="btn btn-primary"
+                        type="button"
+                      >
+                        Search
+                      </button>
+                    </td>
+                    <td rowspan="3">
+                      <img
+                        class="img-responsive"
+                        src="/img/default.jpg"
+                        alt="Image"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th width="20%">Candidate Name ::</th>
+                    <td width="50%">
+                      <span id="student_name"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th width="20%">Date Of Birth ::</th>
+                    <td width="50%" id="student_bob"></td>
+                  </tr>
+                  <tr>
+                    <th width="20%">Appeared For ::</th>
+                    <td width="67%" id="student_appeared_for"></td>
+                    <td>
+                      <img
+                        class="img-responsive"
+                        src="/img/default-sign.jpg"
+                        alt="Image"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th width="20%"></th>
+                    <td width="67%" colspan="2">
+                      <button
+                        id="btn-to-save"
+                        class="hide btn btn-success"
+                        type="button"
+                      >
+                        Mark Present
+                      </button>
+                      <button
+                        id="btn-to-reset"
+                        class="hide btn btn-danger"
+                        type="button"
+                        style="margin-left: 5px"
+                      >
+                        Reset
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .nav-li {
+        color: red;
+      }
+    </style>
+  </body>
+</html>

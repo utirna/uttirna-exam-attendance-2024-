@@ -1,0 +1,399 @@
+@import './common-styles.css';
+
+:root {
+	--text-color: #334155;
+	/* --body-bg:  */
+	--box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+body {
+	min-height: 100%;
+
+	position: relative;
+
+
+}
+
+nav {
+	position: sticky;
+	top: 0;
+	left: 0;
+	background-color: white;
+	border-bottom: 0.2px solid rgba(0, 0, 0, 0.164);
+	z-index: 1000 !important;
+}
+
+.btn-success {
+	/* background-color: #22c55e  !important; */
+	--tw-text-opacity: 1;
+	background-color: rgb(45 181 93 / var(--tw-text-opacity));
+	/* background-color: #14b8a6; */
+	background-color: #10b981;
+	border: none;
+}
+
+.btn-danger {
+	background-color: #e11d48;
+}
+
+nav {
+	padding: 0.5rem 0;
+	.nav-menu {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	& .toggle-view-buttons {
+		display: flex;
+		justify-content: end;
+		gap: 1px;
+
+		& .toggle-view-btn {
+			border: 0;
+			min-width: 6rem;
+			font-weight: bold;
+			letter-spacing: 0.5px;
+			text-transform: uppercase;
+		}
+
+		& .toggle-view-btn.active {
+			color: #9333ea;
+		}
+	}
+
+	#connnected-ip-container {
+		font-weight: bold;
+	}
+}
+
+.header-container {
+	padding: 0.4rem 0;
+	text-align: center;
+	color: var(--text-color);
+}
+
+.candidate-info-container {
+	& .candidate-info,
+	.present-absent-status,
+	.photo-signature-container,
+	.camera-container {
+		border-radius: 5px;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+		padding: 1rem 2rem;
+	}
+}
+.candidate-info-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.photos-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.photo-signature-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	justify-content: center;
+	align-content: center;
+
+	flex: 1.3;
+
+	& div {
+		margin: 0 auto;
+	}
+}
+
+/* .profile-container {
+	width: 15rem;
+	height: 19.5rem;
+	border: 1px solid gray;
+	padding: 0.2rem;
+	background-color: gray;
+
+	& img {
+		width: 100%;
+		height: 100%;
+	}
+} */
+
+/* .sign-container {
+	min-width: 11rem;
+	height: 4rem;
+
+	background-color: gray;
+	border: 4px solid gray;
+
+	& img {
+		width: 100%;
+		height: 100%;
+	}
+} */
+
+.details {
+	/* flex: 3; 
+	display: flex;
+	flex-direction: column;
+	gap: 1rem; */
+	display: grid;
+	grid-template-columns: 8fr 1.6fr;
+
+	/* gap: 1rem; */
+	row-gap: 1rem;
+	column-gap: 1.5rem;
+}
+
+& .candidate-info,
+.present-absent-status {
+	/* padding: 0.5rem 0.8rem; */
+
+	& .candidate-info {
+		display: grid;
+
+		grid-template-columns: 1.3fr 1fr 0.8fr;
+		row-gap: 0.5rem;
+		column-gap: 0.3rem;
+	}
+
+	& .info-container {
+		/* display: flex; */
+		gap: 0.2rem;
+
+		& .label {
+			position: relative;
+			width: 8rem;
+			color: var(--text-color);
+			font-weight: bold;
+			text-transform: capitalize;
+		}
+
+		& .label.total-status {
+			position: relative;
+			width: 7rem;
+
+			color: var(--text-color);
+			font-weight: bold;
+			text-transform: capitalize;
+		}
+
+		/* & .label::after {
+		content: ' :';
+		position: absolute;
+		color: var(--text-color);
+		right: 0;
+		top: 0; /* Aligns the pseudo-element with the top of the label */
+	}
+}
+
+.present-absent-status {
+	display: flex;
+	flex-direction: column;
+	color: var(--text-color);
+	gap: 0.5rem;
+	justify-content: space-between;
+}
+
+.camera-container {
+	flex: 1.5;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	& div {
+		margin: 0 auto;
+	}
+}
+
+video {
+	object-fit: cover; /* Adjust to fit your needs */
+}
+
+.video-snap-container {
+	/* width: 15rem; */
+	/* height: 19.5rem; */
+	& video {
+		height: 100% !important;
+		width: 100% !important;
+	}
+
+	& #snapshot-div {
+		height: 100% !important;
+		width: 100% !important;
+		/* border: 1px solid gray; */
+		/* padding: 0.2rem; */
+		/* background-color: gray; */
+
+		display: none;
+
+		& img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
+#attendence-status-container {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	align-items: center;
+}
+
+.camera-buttons {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	align-items: center;
+}
+
+#lab-pc-status-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	border: 0.3px solid #cbd5e1;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+
+	& .info-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+
+		& .label {
+			width: fit-content;
+		}
+	}
+}
+
+.status-buttons {
+	display: flex;
+	gap: 2rem;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 1rem;
+	margin-bottom: 0.4rem;
+}
+
+.toggle-content {
+	display: none;
+}
+
+#initial-text {
+	text-align: center;
+	padding-top: 5rem;
+	font-size: 3rem;
+	color: var(--text-color) !important;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#loader-container {
+	display: none;
+	margin-top: 3rem;
+	text-align: center;
+	font-size: 1rem;
+}
+.ip {
+	width: 16em;
+	height: 8em;
+}
+.ip__track {
+	stroke: hsl(var(--hue), 90%, 90%);
+	transition: stroke var(--trans-dur);
+}
+.ip__worm1,
+.ip__worm2 {
+	animation: worm1 2s linear infinite;
+}
+.ip__worm2 {
+	animation-name: worm2;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: hsl(var(--hue), 90%, 5%);
+		--fg: hsl(var(--hue), 90%, 95%);
+	}
+	.ip__track {
+		stroke: hsl(var(--hue), 90%, 15%);
+	}
+}
+
+/* Animation */
+@keyframes worm1 {
+	from {
+		stroke-dashoffset: 0;
+	}
+	50% {
+		animation-timing-function: steps(1);
+		stroke-dashoffset: -358;
+	}
+	50.01% {
+		animation-timing-function: linear;
+		stroke-dashoffset: 358;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes worm2 {
+	from {
+		stroke-dashoffset: 358;
+	}
+	50% {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: -358;
+	}
+}
+
+& #btn-loader-container {
+	display: none;
+
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+
+	& .btn-loader-inside {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		/* background-color: #0ea5e9; */
+	}
+}
+
+#btn-loader {
+	width: 35px;
+	padding: 8px;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	/* background: #25b09b; */
+	background-color: white;
+	--_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+	-webkit-mask: var(--_m);
+	mask: var(--_m);
+	-webkit-mask-composite: source-out;
+	mask-composite: subtract;
+	animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+	to {
+		transform: rotate(1turn);
+	}
+}

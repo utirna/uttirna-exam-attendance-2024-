@@ -1,0 +1,76 @@
+<!-- Modal -->
+<div
+    id="ipAddressModal"
+    class="fixed z-10 inset-0 overflow-y-auto"
+    aria-labelledby="modal-title"
+    role="dialog"
+    aria-modal="true"
+    data-modal="true">
+    <div
+        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div
+            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            aria-hidden="true"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
+            >&#8203;</span
+        >
+
+        <!-- Modal panel -->
+        <div
+            class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+            <div class="border-b-2 mb-2">
+                <h1 class="mb-2" id="ipAdressModalLabel">Check Server Connection</h1>
+            </div>
+
+            <div>
+                <div id="inputs-group">
+                    <div class="flex flex-col gap-2">
+                        <select
+                            name=""
+                            id="protocol"
+                            name="protocol"
+                            class="p-2 outline-none shadow-sm ring-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-12 text-md border border-gray-300 rounded">
+                            <option value="http" class="rounded">http</option>
+                            <option value="https" class="rounded">https</option>
+                        </select>
+                        <input
+                            type="text"
+                            id="server-ip-address-name"
+                            class="p-2 outline-none shadow-sm ring-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-12 text-md border border-gray-300 rounded"
+                            name="server-ip-address-name"
+                            placeholder="Enter exam server Id"
+                            value="127.0.0.1" />
+                        <input
+                            type="text"
+                            id="port"
+                            class="p-2 outline-none shadow-sm ring-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-12 text-md border border-gray-300 rounded"
+                            name="port"
+                            placeholder="Enter exam server Id"
+                            value="3050" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3 mt-3 flex justify-center gap-3">
+                <button
+                    type="button"
+                    id="check-server-connection-btn"
+                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Connect
+                </button>
+
+                <button
+                    type="button"
+                    data-modal-button="true"
+                    data-modal-button-role="close"
+                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Close
+                </button>
+            </div>
+            <!-- Empty content here -->
+        </div>
+    </div>
+</div>

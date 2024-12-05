@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container-fluid
+    .row.mt-5
+      .col-8.offset-2
+        .jumbotron.mt-5.ml-5
+          h1.display-4 Welcome, To Center Hander!
+          p.lead
+            | This Page Can Be Only Handeld By Authorized User/IT Manager/Exam-Conrdinator
+          hr.my-4
+          p
+            | For Any Issue Contact To Command Center or Proccess Farther.
+          p.lead
+            a.btn.btn-outline-danger.btn-lg.font-weight-bold(href='/admin/center-handler/new' role='button') Manage New Center
+block js_link
+  script(src="/js/center-handler/rota.hander.js")

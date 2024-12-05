@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <%- include('../common/common-links.ejs')%>
+    <link href="/assets/css/attendance-page.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/staff-list.css" />
+
+    <%- include('../common/common-scripts.ejs')%>
+
+    <!-- <script src="/assets/js/attendence-handler.js" type="module" defer></script> -->
+    <script>
+      const _session =  <%- JSON.stringify(session) %>;
+    </script>
+
+    <script src="/assets/js/staff-list-handler.js" type="module" defer></script>
+  </head>
+  <body style="position: relative">
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="staffDetailsModal"
+      tabindex="-1"
+      aria-labelledby="Label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable" style="">
+        <div
+          class="modal-content"
+          style="z-index: 100000 !important; max-height: 600px"
+        >
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staffDetailsModalLabel">
+              Staff Details
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="staff-info-container">
+              <div>
+                <img
+                  src=""
+                  id="modalImage"
+                  data-modalImagePath="<%=JSON.stringify(staffImageBaseUrl)%>"
+                  onerror='this.src = "https://inodetalents.in/images/team/iNode-director.png"'
+                  alt=""
+                />
+              </div>
+              <div class="label-input-group">
+                <div class="label">Staff Name</div>
+                <input
+                  class="form-control"
+                  id="staff-name-value"
+                  type="text"
+                  readonly
+                />
+              </div>
+
+              <div class="label-input-group">
+                <div class="label">Contact No.</div>
+                <input
+                  class="form-control"
+                  id="staff-contact-number-value"
+                  type="text"
+                  readonly
+                />
+              </div>
+
+              <div class="label-input-group">
+                <div class="label">Alloted Lab</div>
+                <input
+                  class="form-control"
+                  id="staff-alloted-lab-value"
+                  type="text"
+                  readonly
+                />
+              </div>
+
+              <div class="label-input-group">
+                <div class="label">Email</div>
+                <input
+                  class="form-control"
+                  id="staff-email-value"
+                  type="email"
+                  readonly
+                />
+              </div>
+
+              <div class="label-input-group">
+                <div class="label">Aadhar No.</div>
+                <input
+                  class="form-control"
+                  id="staff-aadhar-number-value"
+                  type="text"
+                  readonly
+                />
+              </div>
+
+              <div class="label-input-group">
+                <div class="label">Designation</div>
+                <input
+                  class="form-control"
+                  id="staff-designation-value"
+                  type="text"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="content-section" style="display: none">
+      <div class="container">
+        <div class="nav-menu">
+          <div class="toggle-view-buttons">
+            <a class="btn toggle-view-btn" href="/"> Candidate </a>
+            <a class="btn toggle-view-btn" href="/"> Add Staff </a>
+
+            <a class="btn toggle-view-btn active" href="/staff-list">
+              Staff list
+            </a>
+          </div>
+          <div class="fw-bold">
+            Connected To :
+            <span id="connnected-ip-container"></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="content-section" style="display: none">
+      <div class="container">
+        <div class="header-container">
+          <h1>Staff List</h1>
+        </div>
+
+        <div class="layout-format-buttons-container">
+          <button
+            class="btn layout-btn toggle-staff-list-layout-btn active"
+            data-layout="grid"
+          >
+            <i class="fa-solid fa-grip-vertical"></i>
+          </button>
+          <button
+            class="btn layout-btn toggle-staff-list-layout-btn"
+            data-layout="row"
+          >
+            <i class="fa-solid fa-grip-lines"></i>
+          </button>
+        </div>
+
+        <div id="staff-list-container">
+          <% const staffList = staffMembers %>
+
+          <!-- STaff list grid layout -->
+          <div id="staff-list-grid-layout">
+            <div class="staff-list">
+              <% staffList.forEach(staffMember => { %>
+              <button
+                class="btn staff-member-card view-staff-details-btn"
+                data-staffData="<%=JSON.stringify(staffMember)%>"
+              >
+                <div class="staff-details">
+                  <img
+                    src="<%=staffImageBaseUrl%><%= staffMember.staff_photo %>"
+                    onerror='this.src = "https://inodetalents.in/images/team/iNode-director.png"'
+                    alt="<%= staffMember.staff_name %>"
+                  />
+                  <div class="staff-name"><%= staffMember.staff_name %></div>
+                  <div class="staff-designation">
+                    <%= staffMember.staff_designation %>
+                  </div>
+                  <div class="view-staff-info-btn">
+                    <i class="fa-solid fa-info"></i>
+                  </div>
+                </div>
+              </button>
+              <% }) %>
+            </div>
+          </div>
+
+          <div id="staff-list-row-layout" style="display: none">
+            <div class="staff-list-row">
+              <table class="staff-list-table">
+                <thead>
+                  <tr>
+                    <th width="5%">Sr.No</th>
+                    <th>Staff Name</th>
+                    <th width="20%">Staff Designation</th>
+                    <th width="5%">View</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% staffList.forEach((staffMember, index )=> { %>
+
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td>
+                      <div
+                        class="d-flex justify-content-start align-items-center gap-3"
+                      >
+                        <img
+                          width="27"
+                          height="27"
+                          style="
+                            border-radius: 50%;
+                            border: 1px solid #535353;
+                            padding: 1px;
+                          "
+                          src="<%=staffImageBaseUrl%><%= staffMember.staff_photo %>"
+                          onerror='this.src = "https://inodetalents.in/images/team/iNode-director.png"'
+                          alt="<%= staffMember.staff_name %>"
+                        />
+                        <span> <%= staffMember.staff_name %> </span>
+                      </div>
+                    </td>
+                    <td><%= staffMember.staff_designation %></td>
+
+                    <td>
+                      <button
+                        class="btn table-staff-details-btn view-staff-details-btn"
+                        data-staffData="<%=JSON.stringify(staffMember)%>"
+                      >
+                        <i class="fa-solid fa-info"></i>
+                      </button>
+                    </td>
+                    <% }) %>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

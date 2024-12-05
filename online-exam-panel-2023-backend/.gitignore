@@ -1,0 +1,10 @@
+node_modules
+bin/.env
+package-lock.json
+
+# _images
+# _sign
+_webcam_images
+_staff_images
+
+*.sql

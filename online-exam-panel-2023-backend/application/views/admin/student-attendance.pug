@@ -1,0 +1,51 @@
+extends layout
+
+block content
+    .container-fluid
+        include includes/layout_nav.pug
+        .row
+            .col-xs-2.col-sm-2.col-md-2.col-lg-2
+            .col-xs-8.col-sm-8.col-md-8.col-lg-8(style="margin-top:10px;") 
+                .panel.panel-info
+                    .panel-heading
+                        h3.panel-title Student Attendance
+                    .panel-body 
+                        table.table.table-bordered.table-striped.table-hover(style="font-size: 16px;")
+                            tbody
+                                tr
+                                    th(width='20%') Application No ::
+                                    td(width='50%')
+                                        input#applicant_id(type='text', placeholder='Applicant Id')
+                                        button#getStudentInfo.btn.btn-primary(type='button') Search 
+                                    td(rowspan=3)  
+                                       img.img-responsive(src='/img/default.jpg', alt='Image')
+                                tr
+                                    th(width='20%') Candidate Name ::
+                                    td(width='50%')
+                                        span#student_name
+                                tr
+                                    th(width='20%') Date Of Birth ::
+                                    td(width='50%')#student_bob                                            
+                                tr
+                                    th(width='20%') Appeared For ::
+                                    td(width='67%')#student_appeared_for
+                                    td
+                                        img.img-responsive(src='/img/default-sign.jpg', alt='Image')
+                                tr
+                                    th(width='20%')
+                                    td(width='67%',colspan="2") 
+                                        button#btn-to-save.hide.btn.btn-success(type='button') Mark Present 
+                                        button#btn-to-reset.hide.btn.btn-danger(type='button',style="margin-left:5px") Reset 
+                                    
+                        
+block inline_css
+    style.
+        .nav-li{
+            color:red
+        } 
+block js_link
+    script(src="/js/student.attendance.js")
+    
+
+       
+        

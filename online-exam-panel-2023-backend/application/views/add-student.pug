@@ -1,0 +1,80 @@
+extends layout_2
+
+block content
+    .container-fluid
+        .container
+            .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    center
+                        h1 
+                            img.img-responsive(src="img/yavatmal.jpg" alt='Photo' style="")
+                .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .col-xs-8.col-sm-8.col-md-8.col-lg-8(style='margin-left:0%;margin-top:10%')
+                    div
+                        -const a = true;
+                        -const btn_count = [0,1,2,3,4];
+                        -const btn_count2 = [5,6,7,8,9];
+                        .panel.panel-info
+                            .panel-heading
+                                h3.panel-title Enroll New Student
+                            .panel-body
+                                form(method='POST' action='add-new-student')
+                                    .register-box-body
+                                        .form-group.col-md-4
+                                            input#fname.form-control.test_link_font(type='text' name='fStudentName' aria-haspopup='true' role='textbox' placeholder='Your Name', value = '' required='' autocomplete='off')
+                                        .form-group.col-md-4
+                                            input#lname.form-control.test_link_font(type='text' name='mStudentName' aria-haspopup='true' role='textbox' placeholder='Fathers Name', value = '' required='' autocomplete='off')
+                                        .form-group.col-md-4
+                                            input#mname.form-control.test_link_font(type='text' name='lStudentName' aria-haspopup='true' role='textbox' placeholder='Surname', value = '' required='' autocomplete='off')
+                                        .form-group.col-md-6
+                                            input#mobile.form-control.test_link_font(type='number' name='mobileNumber' aria-haspopup='true' role='textbox' placeholder='MobileNumber', value = '' required='' autocomplete='off')
+                                        .form-group
+                                            input.btn.btn-success.btn-block.btn-flat(type='submit' value='Add New Student' onclick='hideMe(this,event)')
+                                            button.hide.btn.btn-success.btn-block.c_approveing(type='button' onclick='defaultBlock(this,event)') Adding Student ...
+                                a.btn.btn-sm.btn-info(href="/") Go To Test 
+block inline_js
+    script(type='text/javascript').
+        function timeOut() {
+            setTimeout(function () {
+                $('.c-alert-msg').slideUp(750);
+            }, 3000);
+        }
+        timeOut();
+        function hideMe(_this, event) {
+        var val1 = $('#fname').val();
+        var val2 = $('#lname').val();
+        var val3 = $('#mname').val();
+        var val4 = $('#mobile').val();
+
+        if (val1.length == 0 || val2.length == 0 || val3.length == 0 || val4.length == 0) {
+            event.preventDefault();
+            return false;
+        } else {
+            $(_this).addClass('hide');
+            $('.c_approveing').removeClass('hide');
+        }
+        }
+        function setText(_this, event, number) {
+        var val = $('#i_new_test_link').val();
+        $('#i_new_test_link').val(val + number);
+        }
+        function removeText(_this, event, type) {
+        var val = $('#i_new_test_link').val();
+        if (type == 'all') {
+        $('#i_new_test_link').val('');
+        } else {
+        var len = parseInt(val.length);
+        if (len > 0) {
+        $('#i_new_test_link').val($('#i_new_test_link').val().substring(0, len - 1));
+        }
+        }
+        }
+
+        //- document.onkeydown = function (e) {
+        //- e.preventDefault();
+        //- }
+        //- document.onkeypress = function (e) {
+        //- e.preventDefault();
+        //- }
+
+

@@ -1,0 +1,78 @@
+extends layout
+
+block content
+  - var ns = 0;
+  - var p = 0;
+  - var c = 0;
+  .container-fluid
+    include includes/layout_nav.pug
+    .row
+      .col-12.p-3
+        .d-flex.gap-4.justify-content-center
+          h4
+            strong Live Exam Status
+        table#student_list.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th(width='5%') Roll No
+              th(width='15%') Name
+              th(width='10%') Date Of Birth
+              th(width='10%') Time Remaining
+              th(width='7%') Agreement
+              th(width='5%') Exam Status
+
+          tbody
+            if(student_list.length == 0)
+
+            else
+
+              each value,index in student_list
+
+                tr
+                  td #{value.roll_no}
+                  td #{value.student_name}
+                  td #{value.dob}
+                  td #{value.time_remain} Min:Sec
+                  td 
+                    strong.text-warning #{value.aggrement_status_1}
+                  if(value.test_status == 1)
+                    - p++
+                    td 
+                      strong.text-primary In Progress
+                  if(value.test_status == 0)
+                    - c++
+                    td 
+                      strong.text-success Completed
+                  if(value.test_status == 2)
+                    - ns++
+                    td 
+                      strong.text-danger Not Started
+    .row.justify-content-center
+      .col-6
+        table.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th(width='10%').text-danger.ns_exam Not Started :- #{ns}
+              th(width='10%').text-primary.p_exam In progress :- #{p}
+              th(width='10%').text-success.c_exam  Completed :- #{c}           
+
+block inline_css
+  style.
+    .nav-li{
+      color:red
+    } 
+
+
+block inline_js
+  script.
+    $(document).ready(function() {
+      $('#student_list').DataTable();
+      $('.live-active').addClass('active');
+      console.log(#{ns});
+    });
+
+block css_link
+  link(rel='stylesheet' href="/plugins/datatable/datatables.min.css")
+block js_link
+  script(src="/plugins/datatable/datatables.min.js")
+

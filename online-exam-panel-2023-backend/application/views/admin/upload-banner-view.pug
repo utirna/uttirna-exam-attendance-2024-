@@ -1,0 +1,53 @@
+extends layout
+
+block content
+    .container-fluid
+        include includes/layout_nav.pug
+        .container
+            form#upload-banner-form
+                label(for="banner") Upload banner   
+                input(type="file" id='banner' name='banner') 
+                button.btn.btn-primary.upload-banner-btn(type='button') Upload
+
+block inline_css
+    style.
+        .nav-li{
+            color:red
+        } 
+
+
+block inline_js
+    script.
+        $(document).ready(function() {
+            $(document).on('click', '.upload-banner-btn', function(e){
+                e.preventDefault();
+
+                let banner = $('#banner')[0].files[0];
+
+                 
+
+                let formData = new FormData();
+                formData.append('banner', banner)
+
+                uploadBanner(formData)
+            })
+            async function uploadBanner(formData) {
+                let response = await fetch('/admin/upload-banner', {
+                    method: "POST", 
+                    body: formData
+                })
+                let data = await response.json();
+                 
+                if (data.call === 1) {
+                    alert('Successfully uploaded banner image')
+                } else {
+                    alert("")
+                }
+            }
+        });
+
+block css_link
+    link(rel='stylesheet' href="/plugins/datatable/datatables.min.css")
+block js_link
+    script(src="/plugins/datatable/datatables.min.js")
+

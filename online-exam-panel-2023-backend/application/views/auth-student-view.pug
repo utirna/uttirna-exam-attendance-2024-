@@ -1,0 +1,103 @@
+extends layout_2
+
+block test_css_link
+	link(rel='stylesheet' href='/bootstrap/css/auth-student-view.css')
+
+
+block content
+	.container--base
+		.container--primary
+			.main-body 
+				-const btn_count = [0,1,2,3,4];
+				-const btn_count2 = [5,6,7,8,9];
+				if(isSessionMessage)
+					.alert.c-alert-msg(class=isSessionMessage.class)
+						strong #{isSessionMessage.msg}
+
+				h3.auth-forms-heading Assessment User Verification 
+				.panel-body
+					form#verify-candidate-form(action='/verify-candidate' method='POST')
+						.register-box-body
+							if(isSessionMessage)
+								.form-group.has-feedback.input-element-container
+									label.input-label Enter Username
+									input.input-element#i_new_test_roll( type='text' name='r_no' placeholder='Enter Username' minlength='1' maxlength='16' onclick="setInput(this,event,'#i_new_test_roll')" required='' autocomplete='off', value=isSessionMessage.student_info.r_no,readonly="true" )
+								.form-group.has-feedback.input-element-container
+									label.input-label Enter Password
+									input.input-element#i_new_test_mobile( type='text' name='m_no' placeholder='Enter Password' minlength='1' maxlength='16' onclick="setInput(this,event,'#i_new_test_mobile')" required='' autocomplete='off', value=isSessionMessage.student_info.m_no,readonly="true" )
+							else
+								.form-group.has-feedback.input-element-container
+									label.input-label Enter Username
+									input.input-element#i_new_test_roll( type='text' name='r_no' minlength='1' maxlength='16' onclick="setInput(this,event,'#i_new_test_roll')" required='' autocomplete='off' value='' readonly="true" )
+								.form-group.has-feedback.input-element-container
+									label.input-label Enter Password
+									input.input-element#i_new_test_mobile( type='text' name='m_no' minlength='1' maxlength='16' onclick="setInput(this,event,'#i_new_test_mobile')" required='' autocomplete='off' value='' readonly="true" )
+							div.center
+								each btn_nummber in btn_count
+									button.button-numbers(type='button' onclick="setText(this,event,"+btn_nummber+")") #{btn_nummber}
+								.clearfix
+								each btn_nummber in btn_count2
+									button.button-numbers(type='button' onclick="setText(this,event,"+btn_nummber+")") #{btn_nummber}
+								.clearfix
+							div.center.mt-2
+								button.button1.button1--clear(type='button' onclick="removeText(this,event,'all')") Clear All
+								button.button1.button1--back(type='button' onclick="removeText(this,event,'back')") Backspace
+							div.center.mt-2
+								input.button1.button1--submit.c_approveing_btn(type='submit' value='Next' onclick='hideMe(this,event)')
+								button.button1.button1--submit.hide.button1.c_approveing(type='button') Validating user, please wait ...
+block inline_js
+	script(type='text/javascript').
+
+		function timeOut() {
+			setTimeout(function () {
+				$('.c-alert-msg').slideUp(750);
+				$('.c_approveing').addClass('hide');
+				$('.c_approveing_btn').removeClass('hide');
+			}, 3000);
+		}
+		timeOut();
+
+		function hideMe(_this, event) {
+			if (($('#i_new_test_roll').val()).length > 0 && ($('#i_new_test_mobile').val()).length > 0) {
+				$(_this).addClass('hide');
+				$('.c_approveing').removeClass('hide');
+			}
+		}
+
+		//- $('#i_new_test_roll').focus();
+		//-     document.onkeydown = function (e) {
+		//-     e.preventDefault();
+		//- }
+
+		//-     document.onkeypress = function (e) {
+		//-     e.preventDefault();
+		//- }
+
+
+		var input = '#i_new_test_roll';
+
+		function setInput(_this, event, input_1) {
+			input = input_1;
+		}
+		function setText(_this, event, number) {
+			var val = $(input).val();
+			if(isNaN(val)){
+				val = '';
+			}
+			$(input).val(val + number);
+			$(input).focus();
+		}
+
+		function removeText(_this, event, type) {
+			var val = $(input).val();
+				$('.c_approveing').addClass('hide');
+				$('.c_approveing_btn').removeClass('hide');
+			if (type == 'all') {
+				$(input).val('');
+			} else {
+				var len = parseInt(val.length);
+				if (len > 0) {
+				$(input).val($(input).val().substring(0, len - 1));
+				}
+			}
+		}

@@ -1,0 +1,31 @@
+extends layout_2
+
+block content
+    .container--base
+        div.banner-image-box
+            img(class='banner-image' src="img/banner-image/bannerImage.png" alt='Banner image')
+
+block inline_js
+    script(type='text/javascript').
+        $(document).ready(()=>{
+            let mac_id = '10:00:00:00:00:01'
+
+
+            setTimeout(()=>{
+                $.ajax({
+                    url: 'check-if-pc-is-alloted',
+                    method: 'POST',
+                    data: {mac_id},
+                    success: (data)=>{
+                        console.log(data,' -data=---')
+                    },
+                    error: err=>{
+                        console.log(err, '===err===')
+                    }
+                })
+            }, 5000)
+        })
+
+
+
+

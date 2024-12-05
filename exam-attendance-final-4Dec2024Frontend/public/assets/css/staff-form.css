@@ -1,0 +1,199 @@
+:root {
+  --form-box-shadow: 0px 1px 1px rgba(9, 30, 66, 0.25),
+    0px 0px 1px 1px rgba(9, 30, 66, 0.13);
+  --placeholder-color: #748896a3;
+}
+
+#staff-view-container {
+  & .form-container {
+    /* width: 60%; */
+    margin: 0 auto;
+
+    box-shadow: var(--form-box-shadow);
+    padding: 1rem 2rem;
+    /* border-radius: 1rem; */
+    border-radius: 4px;
+
+    & h3 {
+      color: var(--text-color);
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: 1.5px;
+    }
+  }
+}
+
+& .input-fields-container {
+  /* display: flex;
+  flex-direction: column;
+  gap: 1rem; */
+
+  display: grid;
+
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  /* row-gap: 0.5rem; */
+  row-gap: 1rem;
+  column-gap: 1.5rem;
+}
+
+& .label-input-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  & label {
+    width: 10rem;
+    color: var(--text-color);
+    font-weight: bold;
+    position: relative;
+    /* background-color: yellow; */
+  }
+
+  & label::after {
+    content: " :";
+    position: absolute;
+    color: var(--text-color);
+    right: 0;
+    top: 0; /* Aligns the pseudo-element with the top of the label */
+  }
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+
+  /* & button#submit-staff-details-btn {
+    background-color: #7c3aed; 
+    background-color: #10b981;
+    color: white;
+    padding: 0.3rem 2rem;
+
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+  } */
+
+  /* & button#submit-staff-details-btn:hover {
+    background-color: #047857;
+
+  } */
+}
+
+#staff-details-photo-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  > div {
+    box-shadow: var(--form-box-shadow);
+    border-radius: 4px;
+    padding: 1rem 2rem;
+  }
+}
+
+input::placeholder {
+  text-transform: none;
+  font-style: italic;
+  letter-spacing: 1px;
+  /* color: #4b51582b; */
+}
+
+input::-webkit-input-placeholder {
+  color: var(--placeholder-color) !important; /* Chrome, Safari, Opera */
+}
+
+input::-moz-placeholder {
+  color: var(--placeholder-color) !important;; /* Firefox 19+ */
+}
+
+input:-ms-input-placeholder {
+  color: var(--placeholder-color) !important;; /* IE 10+ */
+}
+
+input::-ms-input-placeholder {
+  color: var(--placeholder-color) !important;; /* Edge */
+}
+
+.personal-info-preview-container {
+  /* padding: 0.5rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  & .label-input-group {
+    display: flex;
+    gap: 0.4rem;
+
+    & .label {
+      position: relative;
+      width: 9rem;
+      font-weight: bold;
+      color: var(--text-color);
+    }
+    & .label::after {
+      content: " :";
+      position: absolute;
+      color: var(--text-color);
+      right: 0;
+      top: 0; /* Aligns the pseudo-element with the top of the label */
+    }
+
+    & [id$="-preview-value"] {
+      font-style: italic;
+      font-weight: 500;
+    }
+  }
+}
+.staff-camera-container {
+  padding: 0.5rem;
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & div {
+    margin: 0 auto;
+  }
+}
+#staff-video {
+  object-fit: cover;
+}
+.staff-video-snap-container {
+  width: 15rem;
+  height: 19.5rem;
+}
+
+.staff-video-snap-container video {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+#staff-snapshot-div {
+  height: 100% !important;
+  width: 100% !important;
+  border: 1px solid gray;
+  padding: 0.2rem;
+  background-color: gray;
+  display: none;
+}
+
+#staff-snapshot-div img {
+  width: 100%;
+  height: 100%;
+}

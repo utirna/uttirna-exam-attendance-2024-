@@ -1,0 +1,52 @@
+extends layout
+
+block content
+    .container-fluid
+        include includes/layout_nav.pug
+        .row
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+            .col-xs-10.col-sm-10.col-md-10.col-lg-10(style="margin-top:10px;")
+                h4.text-primary
+                    caption #{exam_info[0].exam_name}
+                    small   (#{exam_info[0].exam_duration} Min)
+                    small.text-danger   (#{exam_info[0].exam_total_question} Question)
+                table#student_list.table.table-striped.table-bordered.table-hover
+                    thead
+                        tr
+                            th Sr. No
+                            th Candidate
+                            th Application ID 
+                            th Date Of Birth
+                            th Appeared For
+                            th Exam Pass Key
+                            th Attendance
+                    tbody
+                        if(student_list.length == 0)
+
+                            tr
+                                td(colspan="5", style="text-align:center") No Student Found
+                        else
+                            each value,index in student_list
+                                tr
+                                    td #{index+1}
+                                    td #{value.student_name}
+                                    td #{value.application_id}
+                                    td #{value.dob}
+                                    td #{value.stream}
+                                    td #{value.pas_key}
+                                    td #{value.attendance}
+                                    
+block inline_css
+    style.
+        .nav-li{
+            color:red
+        } 
+block css_link
+    link(rel='stylesheet', href="/plugins/datatable/datatables.min.css")
+block js_link
+    script(src="/plugins/datatable/datatables.min.js")
+    script(src="/js/exams.student.js")
+    
+
+       
+        

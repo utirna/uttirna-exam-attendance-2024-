@@ -1,0 +1,79 @@
+extends layout
+
+block content
+	.container-fluid
+		.row
+			.col-12.d-none
+				.tf-tree.font-weight-bold
+					ul
+						li
+							span.tf-nc.text-success Utirna Examination Unit
+							ul
+								li
+									span.tf-nc.m-0.p-1  IT Department
+									ul
+										li
+											span.tf-nc.m-0.p-1  Top Floor
+											ul
+												li
+													span.tf-nc.m-0.p-1  Lab-1
+													ul
+														li
+															span.tf-nc.bg-success.text-white.m-0.p-1 U-40
+														li
+															span.tf-nc.bg-danger.text-white.m-0.p-1  BF-40
+												li
+													span.tf-nc.m-0.p-1  Lab-2
+													ul
+														li
+															span.tf-nc.bg-success.text-white.m-0.p-1  U-40
+														li
+															span.tf-nc.bg-danger.text-white.m-0.p-1  BF-40
+								li
+									span.tf-nc.m-0.p-1  Computer
+									ul
+										li
+											span.tf-nc.m-0.p-1  Top Floor
+											ul
+												li
+													span.tf-nc.m-0.p-1  Lab-1
+													ul
+														li
+															span.tf-nc.bg-success.text-white.m-0.p-1  U-40
+														li
+															span.tf-nc.bg-danger.text-white.m-0.p-1  BF-40
+												li
+													span.tf-nc.m-0.p-1  Lab-2
+													ul
+														li
+															span.tf-nc.bg-success.text-white.m-0.p-1  U-40
+														li
+															span.tf-nc.bg-danger.text-white.m-0.p-1  BF-40
+				ul.tree
+					li
+						a Parent 1
+						ul
+							li
+								a Parent 2
+							li
+								a Parent 3
+								ul
+									li
+										a 1st Child of 3
+										ul
+											li
+												a 1st grandchild
+											li
+												a 2nd grandchild
+									li
+										a 2nd Child of 3
+									li
+										a 3rd Child of 3
+							li
+								a Parent 4
+								ul
+									li
+										a Parent 4's only child
+
+block js_link
+	script(src="/js/rota/rota.hander.js")

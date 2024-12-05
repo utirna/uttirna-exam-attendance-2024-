@@ -1,0 +1,176 @@
+extends layout
+
+block content
+  - var ns = 0;
+  - var p = 0;
+  - var c = 0;
+  include includes/layout_nav.pug
+
+  #unlock_cause.modal.fade(tabindex='-1' aria-labelledby='unlock_causeLabel' aria-hidden='true' data-bs-backdrop="static" data-bs-keyboard="false")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h4.modal-title Add Cause To Unlock
+          button.btn-close.close-confirm-modal(type='button' data-bs-dismiss='modal' aria-label='Close')
+        .modal-body
+          table.table.table-striped.table-bordered.table-hover(style="margin-bottum:10px;")
+            tbody
+              tr.input_cause
+                td(width="5%")  
+                  input(type="radio" name="inlineRadioOptions" value="PC ShutDown.")
+                td  PC Shut Down 
+              tr.input_cause
+                td(width="5%")  
+                  input(type="radio" name="inlineRadioOptions" value="Computer Hang.")
+                td  Computer Hang 
+              tr.input_cause
+                td(width="5%")  
+                  input(type="radio" name="inlineRadioOptions" value="Display Problem.")
+                td  Display Problem 
+              tr.input_cause
+                td(width="5%")  
+                  input(type="radio" name="inlineRadioOptions" value="Mouse Not Working.")
+                td  Mouse Not Working.
+              tr.input_cause
+                td(width="5%")  
+                  input(type="radio" name="inlineRadioOptions" value="Network Problem.")
+                td  Network Problem.
+              tr.input_cause
+                td(width="5%")  
+                  input(type="radio" name="inlineRadioOptions" value="Other.")
+                td  Other.    
+
+          button#unlockUser.btn.btn-primary(type='button') Unlock This User
+
+  div.container-fluid
+    .row
+      .col-12.p-3
+        .d-flex.gap-4.w-100.justify-content-center
+          h4
+            strong Student Logged In/Locked List
+        div.mb-3
+          if(student_list.length > 0)
+            .btn.btn-warning.btn-sm.unlock(onclick="unlockAllUser()") Unlock All
+        table#student_list.table.table-striped.table-bordered.table-hover.w-100
+          thead
+            tr
+              th(width='5%') Roll No
+              th(width='15%') Name
+              th(width='10%') Date Of Birth
+              th(width='5%') Status
+              th(width='5%') Unlock
+          tbody
+            if(student_list.length == 0)
+
+            else
+
+              each value,index in student_list
+
+                tr
+                  td #{value.roll_no}
+                  td #{value.student_name}
+                  td #{value.dob}
+                  th.text-success Locked
+                  td
+                    .btn.btn-danger.btn-sm(onclick="unlockOneUser(1,"+value.roll_no+")") Unlock This User
+
+block inline_css
+  style.
+    .nav-li{
+      color:red
+    } 
+    .input_cause{
+      cursor:pointer;
+    }
+
+
+block inline_js
+  script.
+    var resone = '';
+    var _id = 0;
+    $(document).ready(function() {
+      $('#student_list').DataTable();
+      $('.live-active').addClass('active');
+      $('#unlockUser').on('click',function(){
+        if(resone == ''){
+          alert('Select cause for unlocking user.');
+          return false;
+        }else{
+          addLoading();
+          $.ajax({
+            url: getUrl()+"unlock-one-student",
+            type: "POST",
+            data:{
+              stud_id:_id,
+              cause:resone
+            },
+            success:function(data){
+              removeLoading();
+              if(data.call == 1){
+                alert('Student Unlocked Successfully.');
+                document.location.reload();
+                return false;
+              }else{
+                alert('Fail To Unlock Check Console.');
+              }
+            resone = '';
+            _id = 0;
+            },error:function(error){
+              removeLoading();
+              alert('Server Error');
+            }
+          });
+        }
+      });
+      $('.input_cause').on('click',function(){
+        var td = $(this).children();
+          resone = $(td).children().val();
+          $(td).children().prop('checked',true);
+      })
+
+    });
+    function unlockAllUser(){
+      //alert(1);
+      prompt('Enter Authentication Password','*******','password',function(value){
+      if(parseInt(value,10) !== cc) {
+        alert('Invalid Password !!!!');
+        return false;
+      }   
+      addLoading();
+        $.ajax({
+          "url": getUrl()+"unlock-all-student",
+          "type": "POST",
+          "data":{},
+          success:function(data){
+            removeLoading();
+            if(data.call == 1){
+              alert('All Students Unlocked Successfully.');
+              document.location.reload();
+              return false;
+            }else{
+              alert('Fail To Unlock Check Console.');
+
+            }
+          },error:function(error){
+            removeLoading();
+            alert('Server Error');
+
+          }
+        });
+      });
+    }
+    function unlockOneUser(type,id){
+      var _input = $('.input_cause').children();
+      $(_input).children().prop('checked',false);
+      _id = id;
+      $('#unlock_cause').modal('show');
+      return false;
+    }
+
+
+
+block css_link
+  link(rel='stylesheet' href="/plugins/datatable/datatables.min.css")
+block js_link
+  script(src="/plugins/datatable/datatables.min.js")
+

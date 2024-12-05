@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+label {
+	margin-bottom: 0.5rem;
+}
+
+label[id$='-error'] {
+	color: red !important;
+	font-size: 0.8rem;
+	position: absolute;
+}
+
+::placeholder {
+	color: rgb(192, 189, 189) !important;
+}

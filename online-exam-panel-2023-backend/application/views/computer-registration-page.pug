@@ -1,0 +1,73 @@
+extends layout_2
+
+block inline_css
+
+    style.
+        .computer-reg-btn {
+            height: 50px;
+            width: 50px;
+
+            margin: 5px;
+            font-size: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .computers-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .computer-reg-btn.idle{
+            background-color: red !important;
+        }
+
+        .computer-reg-btn.active {
+            background-color: green !important;
+        }
+
+block content
+    .container--base
+        div.banner-image-box
+            img(class='banner-image' src="img/banner-image/bannerImage.png" alt='Banner image')
+        .container--secondary
+            h3 Computer Registration
+
+            form#computer-registration-form
+                .row
+                    .col-md-4 
+                        label(for="department") Department
+                        select.form-control#department(name="department")
+                            option(value="") -- Select Department --  
+                    .col-md-4 
+                        label(for="department") Floor 
+                        select.form-control#floor(name="floor") 
+                            option(value="") -- Select Floor --  
+                    .col-md-4 
+                        label(for="department") Lab 
+                        select.form-control#labs(name="labs") 
+                            option(value="") -- Select Lab --  
+                    .col-md-4
+                        label(for='exams') Exam Name
+                        select.form-control#exams(name='exams' disabled)
+
+                    .col-md-12
+                        div.d-flex.align-items-center(style='margin-top: 10px;')
+                            button.btn.btn-primary.btn-sm#get-node-list-btn(type='submit') Submit
+
+            form#check-link-form(action='/chk/link' method="POST")
+                input(type="hidden" id='exam-link' name='_lnk' style='pointer-events: none;')
+                button#check-link-form-submit-btn(type='submit' style='pointer-events: none; visibility: none; opacity: 0;')
+
+        div.container--secondary
+            h4 Computers
+            div.computers-container
+
+block inline_js
+    script.
+        let _session = !{JSON.stringify(session)};
+        let ip_form_filling = _session.IP_FORM_FILLING;
+    script(src='/js/computer-registration-handler.js' type='module' defer)

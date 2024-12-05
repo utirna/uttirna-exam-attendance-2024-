@@ -1,0 +1,47 @@
+extends layout
+
+block content
+
+  include includes/layout_nav.pug
+  .container-fluid
+    .row
+      .col-12.p-3
+        .d-flex.gap-4.w-100.justify-content-center
+          h4
+            strong Unlocked Candiates List
+        table#student_list.table.table-striped.table-bordered.table-hover.w-100
+          thead
+            tr
+              th(width='1%') #
+              th(width='3%') Photo
+              th(width='3%') Roll No
+              th(width='10%') Name
+              th(width='10%') Unlock Cause
+              th(width='7%') Mac ID (Primary)
+              th(width='5%') Mac ID (Buffers)
+          tbody
+            each el,i in studentsList
+              tr
+                th(width='1%') #{i+1}
+                th.text-center(width='3%')
+                  img.w-50(src=`/pics/_images/${el.s_photo}` onerror=`this.src='/pics/photo_demo.jpg'` alt="student-photo")
+                th.text-center(width='3%') #{el.s_roll_no}
+                th(width='10%') #{el.s_name}
+                th(width='10%') #{el.s_unlock_cause}
+
+                th(width='7%') #{el.s_mac_id.split(',')[0]}
+                th(style='width=5% !imporant; word-break: break-all') #{el.s_mac_id.split(',').slice(1)}
+
+
+block inline_js
+  script.
+    $(document).ready(function() {
+      $('#student_list').DataTable();
+      $('.live-active').addClass('active');
+      console.log(#{ns});
+    });
+block css_link
+  link(rel='stylesheet' href="/plugins/datatable/datatables.min.css")
+block js_link
+  script(src="/plugins/datatable/datatables.min.js")
+

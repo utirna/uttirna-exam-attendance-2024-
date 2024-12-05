@@ -1,0 +1,101 @@
+extends layout
+
+block content
+  include includes/layout_nav.pug
+
+  .container-fluid
+    div.d-flex.justify-content-end
+      button.btn.btn-outline-primary.btn-sm#show-more-options-btn More options
+    .row
+      .col-12#more-options.d-none
+        div.d-flex.justify-content-center.gap-4
+          .form-group
+            label(for='') Center Code
+            select#center_code.form-control(name='' required='')
+              option(value=cc) #{cc}
+          .form-group
+            label(for='') Batch 
+              strong#stud_count.text-success 
+            select#batch_list.form-control(name='' required='')
+              option(value='0') ---Select--- 
+              option(value='1') Batch-1
+              option(value='2') Batch-2
+              option(value='3') Batch-3
+              option(value='4') Batch-4
+              option(value='5') Batch-5
+              option(value='6') Batch-6
+              option(value='7') Batch-7
+              option(value='8') Batch-8
+              option(value='9') Batch-9
+              option(value='10') Batch-10
+              option(value='11') Batch-11
+              option(value='12') Batch-12
+              option(value='13') Batch-13
+              option(value='14') Batch-14
+              option(value='129') Batch-129
+        div.d-flex.justify-content-center.gap-4
+          button#downloadStudentBatchWise.btn.btn-warning(type='button' style="margin-top:22px") Download Students
+          button#refreshList.btn.btn-info(type='button' style="margin-top:22px;margin-left:5px;") Refresh
+
+      .col-12.p-4.pt-0
+        h4.text-primary
+          caption
+          small
+          small.text-danger
+        table#student_list.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th(width='7%') Roll No
+              th(width='30%') Name
+              th(width='15%') Application No
+              th(width='10%') Date Of Birth
+              th(width='5%') Key
+              th(width='10%') Contact No
+              th(width='10%') Status
+          tbody
+        <div class="modal fade" id="modal-id">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Aouth</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="">Enter Aouth Password</label>
+                  <input type="password" class="form-control" id="aouth_password">
+                </div>
+              </div>
+              <div class="modal-footer">
+                button#downloadStudentBatchWise.btn.btn-warning(type='button' style="margin-top:22px") Download Students
+              </div>
+            </div>
+          </div>
+        </div>
+    .row.justify-content-center
+      .col-6#state_count
+
+block inline_css
+  style.
+    .nav-li{
+      color:red
+    } 
+block css_link
+  link(rel='stylesheet' href="/plugins/datatable/datatables.min.css")
+block js_link
+  script(src="/plugins/datatable/datatables.min.js")
+  script(src="/js/exams.student.js")
+
+block inline_js
+  script.
+    $(document).ready(()=>{
+      $("#show-more-options-btn").on('click', function(){
+        $("#more-options").toggleClass('d-none');
+      });
+      $(document).ready(function() {
+        $('.student-active').addClass('active');
+      });
+    })
+
+
+

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    .container-fluid
+        .container
+            .row
+                .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .col-xs-8.col-sm-8.col-md-8.col-lg-8(style='margin-left:0%;margin-top:15%')
+                    div
+                        -const a = true;
+                        -const btn_count = [0,1,2,3,4];
+                        -const btn_count2 = [5,6,7,8,9];
+                        .panel.panel-info
+                            .panel-heading
+                                h3.panel-title #{head}
+                            .panel-body
+                                if(isError)
+                                   h3.text-danger #{message}
+                                else
+                                    h3.text-success User Name:
+                                        span #{data.name}
+                                    h3.text-success Password:  
+                                        span #{data.password}
+                                a.btn.btn-sm.btn-danger(href="/") Go To Test Page 
+
+       
+        

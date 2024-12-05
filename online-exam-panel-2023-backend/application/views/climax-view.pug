@@ -1,0 +1,162 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(http-equiv='Cache-control', content='no-cache')
+        meta(http-equiv='Expires', content='-1')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0')
+        
+        //- CUSTOM CSS IMPORT 
+        link(rel='stylesheet' href="/bootstrap/css/font-awesome.min.css")
+        link(rel='stylesheet' href='/bootstrap/css/common_styles.css')
+
+    style(type='text/css').
+        ol li {
+            padding: 0.5% 2%;
+            font-size: 10.5pt;
+        }
+        .panel {
+            margin-top: 0%;
+        }
+        .set-bor {
+            border: 2px solid #000;
+        }
+        .set-to-mid{
+            margin-top:10em;  
+        }
+        .set-panel-text{
+            color:green;
+            font-size:20px;
+        }
+        td{
+            padding:10px 20px;
+        }
+        .text-success{
+            margin-left:15%;
+            font-size:2em;
+            color:green;
+        }
+        .panel-title {
+            margin-left:21%;
+            color:red;
+            font-size:1.4em;
+        }
+      * {
+         user-select: none;
+        -khtml-user-select: none;
+        -o-user-select: none;
+        -moz-user-select: -moz-none;
+        -webkit-user-select: none;
+      }
+      .end-exam-box-heading {
+        background-color: #0c8599;
+        padding: 1.8rem;
+        font-size: 2.4rem;
+        color: #fff;
+        font-weight: 700;
+        text-align: center;
+        margin: 0;
+      }
+
+      .candidate-details-heading {
+        margin-top: 1.6rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 2rem;
+      }
+
+      .candidate-details-box {
+        padding: 1.4rem;
+        margin-bottom: 2rem;
+        margin-top: 1.6rem;
+      }
+      
+      .candidate-details {
+        font-size: 1.8rem !important;
+        margin-bottom: 1.6rem !important;
+      }
+
+      .container--primary  {
+            max-width: 80rem;
+            margin: auto;
+        }
+        .main-body {
+            margin-top: 20rem;
+        }
+
+        .student-info {
+            font-weight: 600;
+            
+        }
+
+      ::selection { background: transparent;color: inherit;}
+      ::-moz-selection { background: transparent;color: inherit;}
+
+    body.welcome(oncontextmenu="return false;", ondragstart='return false;', ondrop='return false;')
+        .container--base
+            .container--primary
+                .main-body 
+                    h3.end-exam-box-heading
+                        i.fa.fa-paper-plane 
+                        |&nbsp;&nbsp;&nbsp;
+                        span Exam Submitted Successfully!
+                    h2.candidate-details-heading ::Candidate Details::
+                    div.candidate-details-box
+                        p.candidate-details 
+                            span Candidate ID - 
+                            span.student-info #{studentDetails.id}
+                        p.candidate-details 
+                            span Candidate Name - 
+                            span.student-info #{studentDetails.sl_f_name} #{studentDetails.sl_m_name} #{studentDetails.sl_l_name}
+                        p.candidate-details 
+                            span Candidate Post - 
+                            span.student-info #{studentDetails.sl_post}
+                        
+        //- .container-fluid
+        //-     .row
+        //-         .col-sm-10.col-sm-offset-1(style="margin-top: 5%;margin-left:20%;")
+        //-             .panel.panel-info
+        //-                 .panel-heading
+        //-                     h3.panel-title ::Candidate Details::
+        //-             .panel-body
+        //-                 .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        //-                     table.table.table-striped.table-hover(border="2")
+        //-                         tr
+        //-                             th(width="20%")
+        //-                                 i User Name
+        //-                             td(width="60%") 
+        //-                                 strong 
+        //-                                     span(style="margin-right:7px") #{studentDetails.id}
+        //-                         tr
+        //-                             th(width="15%")
+        //-                                 i Candidate Name
+        //-                             td 
+        //-                                 strong 
+        //-                                     span(style="margin-right:7px") #{studentDetails.sl_f_name}
+        //-                                     span(style="margin-right:7px") #{studentDetails.sl_m_name}
+        //-                                     span(style="margin-right:7px") #{studentDetails.sl_l_name}
+        //-                         tr
+        //-                             th(width="15%")
+        //-                                 i Post
+        //-                             td 
+        //-                                 strong 
+        //-                                     span(style="margin-right:7px") #{studentDetails.sl_post}
+        //-             p.h1.text-success Exam Submitted Successfully.
+
+    script(type="text/javascript").
+            setTimeout(function(){
+                location.replace('/');
+            }, 120000);
+            
+            //- document.addEventListener("keypress", function(event){
+            //-         event.preventDefault();
+            //-     });
+            //-     document.addEventListener("keydown", function(event){
+            //-        event.preventDefault();
+            //-     });
+            //-     document.addEventListener("keypress", function(event){
+            //-        event.preventDefault();
+            //-     });
+                                    

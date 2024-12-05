@@ -1,0 +1,124 @@
+extends layout
+
+block inline_css
+
+	style. 
+		@media print {
+			@page {
+				size: landscape;
+			}
+			#mainGraph, .navbar, .action-btn  {
+				display: none;
+			}
+
+			#finalGraph {
+				border: 1px solid black;
+				height: 192mm;
+				width: 297mm;
+				padding: 8px;
+			}
+		}
+
+		#finalGraph {
+			border: 1px solid black;
+			height: 192mm;
+			padding: 8px;
+		}
+
+block inline_js
+	script.
+		let storedLayouts = !{JSON.stringify(_storedLayouts)}
+		const session = !{JSON.stringify(session)}
+
+block content
+	.container-fluid.p-4
+		.row#mainGraph
+			.col-4.center-details-box
+				h3.mb-4.text-info.font-weight-bold.text-center Add Center Details
+				.row.g-3
+
+					.form-group.col-12
+						label.mb-2(for="saved-layouts") Saved Layouts
+						span.trash-hand.ms-2.text-danger(data-name="saved-layouts")
+							i.fa.fa-trash
+						select#saved-layouts.form-control(name="") 
+						button.btn.btn-outline-secondary.btn-sm#upload-layout-btn(type='button') Upload 
+						button.btn.btn-outline-secondary.btn-sm#reset-layout-btn(type='button') Reset Layout (On server)
+
+					.form-group.col-12
+						label.mb-2(for="centerName") Center Name
+						input#centerName.form-control(type="text" placeholder="Center Name" value=session.c_name)
+					hr.mb-0
+					.form-group.col-12
+						.row.g-3
+							.col-12
+								label.mb-2(for="") Depatrment
+								span.trash-hand.ms-2.text-danger(data-name="dept")
+									i.fa.fa-trash
+								input.form-control#inputDepartment(type="text" placeholder="Add Depatrment")
+							.col-12
+								select.form-control.tbodyDepartment
+									option(value="-1") ----Select-----
+					hr.mb-0
+
+					.form-group.col-12
+						.row.g-3
+							.col-12
+								label.mb-2(for="") Floor
+								span.trash-hand.ms-2.text-danger(data-name="floor")
+									i.fa.fa-trash
+								input.ml-3.form-control#inputFloor(type="text" placeholder="Add Foor")
+							.col-12
+								select.form-control.col-11.tbodyFloor
+									option(value="-1") ----Select-----
+					hr.mb-0
+
+					.form-group.col-12
+						.row.g-3
+							.col-12
+								label.mb-2(for="") Lab
+								span.trash-hand.ms-2.text-danger(data-name="lab")
+									i.fa.fa-trash
+								input.ml-3.form-control#inputLab(type="text" placeholder="Add New Lab")
+							.col-12
+								select.form-control.col-11.tbodyLab
+									option(value="-1") ----Select-----
+					hr.mb-0
+
+					.form-group.col-12
+						.row.g-4
+							.col-4
+								label(for="") Total Node
+								input.form-control.tNode(type="text" placeholder="")
+							.col-4
+								label(for="") User Node
+								input.form-control.uNode(type="text" placeholder="" readonly="true")
+							.col-4
+								label(for="") Buffer Node
+								input.form-control.bfNode(type="text" placeholder="" readonly="true")
+					.form-group.col-12
+						.d-flex.justify-content-end
+							button.btn.btn-sm.btn-primary#doneViewFinal Done
+			.col-8.graphical-view-box
+				h3.text-center.text-success.font-weight-bold Graphical View
+				.row
+					.col-12
+						#masterTree
+
+		div.action-btn.d-none
+			#btn.d-flex.gap-3.mb-3
+				button.btn.btn-primary.btn-sm.ml-2#print-layout Print Layout
+				button.btn.btn-success.btn-sm.ml-1#saveCenter Save Center
+				button.btn.btn-danger.btn-sm.ml-2#back Back
+		.row#finalGraph.d-none.d-flex.justify-content-center
+			.d-flex.flex-column
+				div 
+					h3.mt-2.text-center.text-info#college-name 
+					center
+						.tf-tree.font-weight-bold.mt-5#printHirarchiTree
+
+				div.mt-auto
+					div.d-flex.justify-content-end
+						p.p-0.m-0.strong Venue Head - Sign & Stamp 
+block js_link
+	script(src="/js/center-handler/center-handler.js")

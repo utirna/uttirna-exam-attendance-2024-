@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Candidate Attendence</title>
+
+		<%- include('../common/common-links.ejs')%>
+		<link href="/assets/css/attendance-page.css" rel="stylesheet" />
+
+		<%- include('../common/common-scripts.ejs')%>
+
+		<script>
+			let _session =  <%- JSON.stringify(session) %>;
+		</script>
+		<script src="/assets/js/candidate/candidate-attendence-handler.js" type="module" defer></script>
+		<script src="/assets/js/staff-form-handler.js" type="module" defer></script>
+	</head>
+	<body style="position: relative">
+		<!-- navbar -->
+		<%- include('../common/navbar.ejs') %>
+
+		<!-- Modal -->
+		<div class="modal fade" id="ipAddressModal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="ipAdressModalLabel">Check Connection</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="d-flex flex-column gap-2">
+							<select class="form-select" name="protocol" id="">
+								<option value="http" selected>http</option>
+								<option value="https">https</option>
+							</select>
+
+							<input type="text" class="form-control" name="server-ip-address-name" placeholder="Enter exam server Id" value="64.227.149.129" />
+
+							<input type="text" class="form-control" name="port" placeholder="Enter exam server Id" value="6041" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="check-server-connection-btn">Check Connection</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- view profile modal -->
+		<%- include('./view-profile-modal.ejs') %>
+
+		<!-- candidate -->
+		<div class="container mx-auto">
+			<h3 class="font-semibold text-[#555]">Candidate Details</h3>
+			<div class="details grid grid-cols-5 gap-6">
+				<div class="candidate-info grid grid-cols-3 col-span-3 gap-3 shadow-md p-6 rounded-[2rem]">
+					<div class="col-span-2 flex items-center gap-3">
+						<i class="fa-solid fa-user text-3xl text-[#43A7FF] text-xl"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">Name</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="name">Omkar Popat Patole</div>
+						</div>
+					</div>
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-calendar-days text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">DOB</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="dob">01-07-1999</div>
+						</div>
+					</div>
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-layer-group text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">Exam Date</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="exam-date">10-10-2024</div>
+						</div>
+					</div>
+
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-layer-group text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">Exam Time</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="exam-date">10:00 AM - 12:00 PM</div>
+						</div>
+					</div>
+
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-layer-group text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">Batch</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="batch">Batch - <span class="text-[#F77935]">01</span></div>
+						</div>
+					</div>
+
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-id-card-clip text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">User Id</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="username">1010001</div>
+						</div>
+					</div>
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-id-card text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">Application No.</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="application-number">500001</div>
+						</div>
+					</div>
+					<div class="flex items-center gap-3">
+						<i class="fa-solid fa-id-card text-xl text-[#43A7FF]"></i>
+						<div>
+							<div class="label font-semibold text-[#555] text-md">Post</div>
+							<div class="value font-semibold text-lg text-[#43A7FF]" id="post">Jr. Clerk</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="present-absent-status grid grid-cols-3 col-span-2 h-[7rem] gap-6">
+					<h3 class="font-semibold col-span-3 text-[#333]">Attendence Details</h3>
+
+					<div class="col-span-3">
+						<div class="justify-center items-center flex">
+							<div class="mt-1 relative flex items-center justify-center">
+								<input
+									type="text"
+									name="search"
+									id="student-id"
+									placeholder="Search candidate..."
+									autocomplete="off"
+									class="p-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-12 text-md border-gray-300 rounded-xl" />
+								<button
+									type="button"
+									id="search-btn"
+									class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+									Search
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="bg-[#fff] shadow-md p-5 rounded-[2rem] flex flex-col justify-center">
+						<div class="flex items-end gap-2">
+							<p class="value text-4xl text-[#43A7FF]" id="total-alloted">500</p>
+							<i class="fa-solid fa-users mb-1 text-[#43A7FF]"></i>
+						</div>
+						<div class="label total-status text-md text-[#555] font-semibold">Total Alloted</div>
+					</div>
+
+					<div class="bg-[#fff] shadow-md p-5 rounded-[2rem] flex flex-col justify-center">
+						<div class="flex items-end gap-2">
+							<p class="value text-4xl text-[#43A7FF]" id="total-alloted">70</p>
+							<i class="fa-solid fa-user-check mb-1 text-[#43A7FF]"></i>
+						</div>
+						<div class="label total-status text-md text-[#555] font-semibold">Total Present</div>
+					</div>
+
+					<div class="bg-[#fff] shadow-md p-5 rounded-[2rem] flex flex-col justify-center">
+						<div class="flex items-end gap-2">
+							<p class="value text-4xl text-[#F77935]" id="total-alloted">30</p>
+							<i class="fa-solid fa-user-xmark mb-1 text-[#F77935]"></i>
+						</div>
+						<div class="label total-status text-md text-[#555] font-semibold">Total Absent</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- photos container -->
+		<div class="container mx-auto mt-6">
+			<div class="grid grid-cols-2 gap-6">
+				<h3 class="col-span-2 font-semibold text-[#555]">Candidate Photo Details</h3>
+				<div class="photos-container shadow-lg p-5 rounded-[2rem] flex items-center justify-center">
+					<div class="photo-signature-container grid grid-cols-2 items-center gap-6">
+						<div class="profile-container w-[15rem] rounded-xl overflow-hidden">
+							<img
+								id="student-image"
+								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VXMNeeciRYb7TRT63rJuWuzTfwllvct3Q&s"
+								onerror="this.src='/assets/images/faceless-man.jpg'"
+								class="w-full" />
+						</div>
+						<div class="sign-container w-[15rem] border rounded-xl overflow-hidden">
+							<img
+								id="student-sign"
+								src="https://www.shutterstock.com/image-vector/fake-autograph-samples-handdrawn-signatures-600nw-2325821623.jpg"
+								onerror='this.src="https://www.shutterstock.com/image-vector/fake-autograph-samples-handdrawn-signatures-600nw-2325821623.jpg"'
+								class="w-full" />
+						</div>
+					</div>
+				</div>
+
+				<div class="photos-container shadow-lg p-5 rounded-[2rem] flex items-center justify-center">
+					<div class="camera-container grid grid-cols-2 items-center gap-6">
+						<div id="video-container" class="video-snap-container">
+							<video id="video"></video>
+							<canvas id="canvas" style="display: none"></canvas>
+							<div id="snapshot-div"></div>
+						</div>
+
+						<div id="lab-pc-status-container" style="display: none">
+							<div class="info-container">
+								<div class="label">Hall No:</div>
+								<div class="value text-primary" id="lab-number">343</div>
+							</div>
+
+							<div class="info-container">
+								<div class="label">Seat No:</div>
+								<div class="value text-primary" id="pc-number">3424343</div>
+							</div>
+						</div>
+
+						<div class="text-center camera-buttons flex flex-col gap-4">
+							<button
+								type="button"
+								class="px-8 py-4 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+								id="take-snap-btn">
+								Take Snap
+							</button>
+
+							<button
+								type="button"
+								id="reset-btn"
+								class="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+								Reset
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section class="content-section">
+			<div class="container">
+				<div class="header-container">
+					<!-- <h1>No Name</h1> -->
+					<h1></h1>
+				</div>
+
+				<!-- Candidate View Container -->
+
+				<div id="candidate-view-container">
+					<div class="search-container">
+						<input type="text" id="student-id" placeholder="Enter candidate id here e.g. 3005 " autocomplete="off" />
+						<button type="button" id="search-btn" class="btn btn-primary">
+							<span>Search</span>
+							<div id="btn-loader-container">
+								<div class="btn-loader-inside">
+									<div id="btn-loader"></div>
+								</div>
+							</div>
+						</button>
+					</div>
+
+					<div class="candidate-info-container">
+						<div class="details">
+							<div class="candidate-info">
+								<div class="info-container">
+									<div class="label">Name</div>
+									<div class="value" id="name">Omkar Popat Patole</div>
+								</div>
+								<div class="info-container">
+									<div class="label">User Id</div>
+									<div class="value" id="username">1010001</div>
+								</div>
+								<div class="info-container">
+									<div class="label">Application No.</div>
+									<div class="value" id="application-number">500001</div>
+								</div>
+								<div class="info-container">
+									<div class="label">DOB</div>
+									<div class="value" id="dob">01-07-1999</div>
+								</div>
+								<div class="info-container">
+									<div class="label">Post</div>
+									<div class="value" id="post">Jr. Clerk</div>
+								</div>
+								<div class="info-container">
+									<div class="label">Exam Date</div>
+									<div class="value" id="exam-date">10-10-2024</div>
+								</div>
+								<div class="info-container">
+									<div class="label">Batch</div>
+									<div class="value" id="batch">1</div>
+								</div>
+							</div>
+
+							<div class="present-absent-status">
+								<div class="info-container">
+									<div class="label total-status">Total Alloted</div>
+									<div class="value" id="total-alloted">100</div>
+								</div>
+								<div class="info-container">
+									<div class="label total-status">Total Present</div>
+									<div class="value" id="total-present">70</div>
+								</div>
+								<div class="info-container">
+									<div class="label total-status">Total Absent</div>
+									<div class="value" id="total-absent">30</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Photos container -->
+						<div class="photos-container">
+							<div class="photo-signature-container">
+								<div class="profile-container">
+									<img
+										id="student-image"
+										src="https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg"
+										onerror="this.src='/assets/images/faceless-man.jpg'" />
+								</div>
+								<div class="sign-container">
+									<img
+										id="student-sign"
+										src="https://www.shutterstock.com/image-vector/fake-autograph-samples-handdrawn-signatures-600nw-2325821623.jpg"
+										onerror='this.src="https://www.shutterstock.com/image-vector/fake-autograph-samples-handdrawn-signatures-600nw-2325821623.jpg"' />
+								</div>
+							</div>
+
+							<!-- Camera container -->
+							<div class="camera-container">
+								<div id="video-container" class="video-snap-container">
+									<video id="video"></video>
+									<canvas id="canvas" style="display: none"></canvas>
+									<div id="snapshot-div"></div>
+								</div>
+
+								<div id="lab-pc-status-container" style="display: none">
+									<div class="info-container">
+										<div class="label">Hall No:</div>
+										<div class="value text-primary" id="lab-number">343</div>
+									</div>
+
+									<div class="info-container">
+										<div class="label">Seat No:</div>
+										<div class="value text-primary" id="pc-number">3424343</div>
+									</div>
+								</div>
+
+								<div class="camera-buttons">
+									<button class="button button-primary" id="take-snap-btn">Take Snap</button>
+									<button class="button button-secondary" id="reset-btn">Reset</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="status-buttons toggle-content">
+						<button class="button button button-primary" id="mark-present-btn">Mark Present</button>
+						<button class="button button-danger" id="reject-btn">Reject</button>
+						<button class="button button-secondary" id="reset-page-btn">Reset Page</button>
+					</div>
+
+					<div id="loader-container">
+						<svg class="ip" viewBox="0 0 256 128" width="256px" height="128px" xmlns="http://www.w3.org/2000/svg">
+							<defs>
+								<linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+									<stop offset="0%" stop-color="#5ebd3e" />
+									<stop offset="33%" stop-color="#ffb900" />
+									<stop offset="67%" stop-color="#f78200" />
+									<stop offset="100%" stop-color="#e23838" />
+								</linearGradient>
+								<linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
+									<stop offset="0%" stop-color="#e23838" />
+									<stop offset="33%" stop-color="#973999" />
+									<stop offset="67%" stop-color="#009cdf" />
+									<stop offset="100%" stop-color="#5ebd3e" />
+								</linearGradient>
+							</defs>
+							<g fill="none" stroke-linecap="round" stroke-width="16">
+								<g class="ip__track" stroke="#ddd">
+									<path d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56" />
+									<path d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64" />
+								</g>
+								<g stroke-dasharray="180 656">
+									<path class="ip__worm1" stroke="url(#grad1)" stroke-dashoffset="0" d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56" />
+									<path class="ip__worm2" stroke="url(#grad2)" stroke-dashoffset="358" d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64" />
+								</g>
+							</g>
+						</svg>
+					</div>
+
+					<div id="initial-text" class="text-white">
+						<h1>Enter Candidate Id To Search</h1>
+					</div>
+				</div>
+
+				<!-- Staff View Container -->
+				<div id="staff-view-container">
+					<div class="form-container">
+						<h3>Staff Registration</h3>
+						<form class="form" id="staff-details-form">
+							<div class="input-fields-container">
+								<div class="label-input-group">
+									<label for="">Full Name</label>
+									<input type="text" name="staff_name" class="form-control text-uppercase" placeholder="Enter the name" />
+								</div>
+
+								<div class="label-input-group">
+									<label for="">Contact No.</label>
+									<input type="text" name="staff_contact_number" class="form-control" maxlength="10" placeholder="e.g. 8212322388" />
+								</div>
+
+								<div class="label-input-group">
+									<label for="">Alloted Lab</label>
+									<input type="text" name="staff_alloted_lab" placeholder="Enter allocated lab" class="form-control" />
+								</div>
+
+								<div class="label-input-group">
+									<label for="">Email</label>
+
+									<input type="email" name="staff_email" class="form-control text-lowercase" placeholder="e.g. example@gmail.com" />
+								</div>
+								<div class="label-input-group">
+									<label for="">Aadhar No.</label>
+									<input type="text" name="staff_aadhar_number" class="form-control" maxlength="12" placeholder="e.g. 4218 7414 8187" />
+								</div>
+								<div class="label-input-group">
+									<label for="staff-designation">Designation</label>
+									<select name="staff_designation" id="staff-designation" class="form-select">
+										<option value="" selected>-- Select --</option>
+
+										<option value="Venue Head">Venue Head</option>
+										<option value="IT Manager">IT Manager</option>
+										<option value="Observer">Observer</option>
+										<option value="Invigilator">Invigilator</option>
+										<option value="Electrician">Electrician</option>
+										<option value="House Keeping">House Keeping</option>
+										<option value="Support Staff">Support Staff</option>
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div id="staff-details-photo-container">
+						<div class="personal-info-preview-container">
+							<div class="label-input-group">
+								<div class="label">Staff Name</div>
+								<div id="staff-name-preview-value"></div>
+							</div>
+
+							<!-- <div class="label-input-group d-none">
+                <div class="label">College Name</div>
+                <div id="staff-college-name-preview-value"></div>
+              </div> -->
+							<div class="label-input-group">
+								<div class="label">Contact No.</div>
+								<div id="staff-contact-number-preview-value"></div>
+							</div>
+
+							<div class="label-input-group">
+								<div class="label">Alloted Lab</div>
+								<div id="staff-alloted-lab-preview-value"></div>
+							</div>
+
+							<div class="label-input-group">
+								<div class="label">Email</div>
+								<div id="staff-email-preview-value"></div>
+							</div>
+							<div class="label-input-group">
+								<div class="label">Aadhar No.</div>
+								<div id="staff-aadhar-number-preview-value"></div>
+							</div>
+							<div class="label-input-group">
+								<div class="label">Designation</div>
+								<div id="staff-designation-preview-value"></div>
+							</div>
+						</div>
+
+						<!-- Camera container -->
+						<div class="staff-camera-container">
+							<div id="staff-video-container" class="staff-video-snap-container">
+								<video id="staff-video"></video>
+								<canvas id="staff-canvas" style="display: none"></canvas>
+								<div id="staff-snapshot-div"></div>
+							</div>
+							<div class="staff-camera-buttons">
+								<button class="button button-primary" id="staff-take-snap-btn">Take Snap</button>
+								<button class="button button-secondary" id="staff-reset-btn">Reset</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="buttons-container">
+						<button class="button button-primary" id="submit-staff-details-btn">Submit</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+extends layout
+
+block inline_css
+    style(type='text/css').
+        ol li {
+        padding: 0.5% 2%;
+        font-size: 10.5pt;
+        }
+        .panel {
+        margin-top: 0%;
+        }
+        .set-bor {
+        border: 2px solid #000;
+        }
+        .set-to-mid{
+            margin-top:10em;  
+        }
+        .set-panel-text{
+            color:red;
+            font-size:20px;
+        }
+
+block content
+    .col-xs-6.col-sm-6.col-md-6.col-lg-6.col-md-offset-3.col-sm-offset-3.col-md-offset-lg-3.set-to-mid
+        .panel.panel-info
+            .panel-heading
+                sapn.panel-title Examination Completed
+            .panel-body
+                p.text-center.set-panel-text Exam is Already Completed By This Candidate, Thank You.
+block inline_js
+    script(type="text/javascript").
+            setTimeout(function(){
+                location.replace('/');
+            }, 20000);

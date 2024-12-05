@@ -1,0 +1,7 @@
+{
+    "watch": [
+        "application/",
+        "routes/"
+    ],
+    "ext": "js, css"
+}

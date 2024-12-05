@@ -1,0 +1,60 @@
+//- .nav.navbar.navbar-default(role='navigation')
+//-     .collapse.navbar-collapse.navbar-ex1-collapse
+//-         ul.nav.navbar-nav
+//-             li.exam-active
+//-                 a(href='/admin/exams') Exam Section
+//-             li.student-active
+//-                 a(href='/admin/students') Student Section
+//-             li.nav-li.live-active
+//-                 a(href='/admin/live-exam-status') Live Status
+//-             li.nav-li.adminner-active
+//-                 a(href='/admin/adminner') Adminer
+//-             li.nav-li.upload-banner 
+//-                 a(href='/admin/upload-banner') Upload Baner
+//-             li.nav-li.upload-banner 
+//-                 a(href='/admin/center-handler') Center Handler
+//-         a.btn.btn-danger.pull-right.btn-sm(href='/admin/logout' style='margin-top:8px') Server #{cc} Logout
+//-         a.btn.pull-right(href='#' style='margin-top:8px')
+//-             strong #{c_name}
+
+nav.navbar.navbar-expand-lg.bg-body-tertiary.mb-4
+    .container-fluid
+        //- a.navbar-brand(href='/admin') Admin 
+        button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+            div.d-flex.justify-content-between.align-items-center.w-100
+
+                ul.navbar-nav
+
+                    if !is_mock_mode
+                        li.nav-item.exam-active
+                            a.nav-link.active(aria-current='page' href='/admin/exams') Exam Section
+                        li.nav-item.student-active
+                            a.nav-link(href='/admin/students') Student Section
+                        li.nav-item.dropdown
+                            a.nav-link.dropdown-toggle(href='#' role='button' data-bs-toggle='dropdown') Live Status
+                            ul.dropdown-menu
+                                li
+                                    a.dropdown-item(href='/admin/exam-lock-status') View Locked List
+                                    a.dropdown-item(href='/admin/live-exam-status') View Live Status
+                                    a.dropdown-item(href='/admin/unlocked-candidate-list') Unlocked Candidates
+                        li.nav-item.adminner-active
+                            a.nav-link(href='/admin/adminner') Adminer 
+                        li.nav-item.upload-banner
+                            a.nav-link(href='/admin/upload-banner') Upload Baner 
+                    else
+                        li.nav-item.center-handler
+                            a.nav-link(href='/admin/center-handler') Center Handler 
+
+                        li.nav-item.center-handler
+                            a.nav-link(href='/admin/mock-setting') Mock Setting
+
+                        li.nav-item.exam-active
+                            a.nav-link.active(aria-current='page' href='/admin/exams') Exam Section
+
+
+                ul.navbar-nav
+                    li.nav-item
+                        strong.mx-4 #{c_name}
+                        a.btn.btn-danger.btn-sm(href='/admin/logout') Server #{cc} Logout
