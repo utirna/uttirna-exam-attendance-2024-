@@ -9,6 +9,10 @@ let backendUrl = '';
 
 const wrapperClasses = document.querySelectorAll('.wrapper');
 
+const getBackendUrl = (endpoint) => {
+    return `${backendUrl}${endpoint}`;
+};
+
 if (isDevMode()) {
     _session = {
         serverUrl: 'dummyrurl',
@@ -60,7 +64,10 @@ const portInputTag = document.querySelector('#port');
 const handleCheckForServerConnection = async (ip_address, protocol, port) => {
     try {
         //TO DO
+
+        // const serverUrl = `${protocol}://${ip_address}:${port}`;
         const _url = '/connection/establish-connection';
+        // const _url = `/api/v1/check-status`
         const _res = await fetch(_url, {
             method: 'POST',
             body: JSON.stringify({
@@ -122,4 +129,4 @@ serverConnectionBtn?.addEventListener('click', () => {
     handleCheckForServerConnection(serverIpAddress, protocol, port);
 });
 
-export { backendUrl };
+export { backendUrl, getBackendUrl };

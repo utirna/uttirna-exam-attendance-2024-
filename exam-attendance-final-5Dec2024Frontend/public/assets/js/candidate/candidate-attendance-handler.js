@@ -1,6 +1,6 @@
 import { dummyAttendanceCount, dummyPcDetails, dummyStudentData } from '../common/data.js';
 import { showBsModal } from '../alertjs.js';
-import { backendUrl } from '../common/establish-connection-handler.js';
+import { backendUrl, getBackendUrl } from '../common/establish-connection-handler.js';
 import { CROP_HEIGHT, CROP_WIDTH, isDevMode, printDev } from '../common/project-mode-handler.js';
 import { base64ToBlob } from '../common/utility-handler.js';
 import { Toast } from '../common/toasts.js';
@@ -177,7 +177,8 @@ const handleMarkAttendence = async (sendData) => {
     try {
         // console.log("getin ackecn url = ", backendUrl);
         // console.log('marking presnt : ', sendData);
-        const _url = `${backendUrl}/api/attendence/v1/mark-present`;
+        const _url = getBackendUrl('/api/attendence/v1/mark-present');
+
         // console.log(_url);
         const _response = await fetch(_url, {
             method: 'POST',
@@ -401,7 +402,7 @@ const handleFetchStudentDetails = async (id) => {
         //   element.style.display = "none";
         // });
 
-        const _url = `${backendUrl}/api/attendence/v1/student-details`;
+        const _url = getBackendUrl('/api/attendence/v1/student-details');
 
         const _response = await fetch(_url, {
             method: 'POST',
