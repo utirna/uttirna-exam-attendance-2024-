@@ -6,8 +6,8 @@ import { base64ToBlob } from '../common/utility-handler.js';
 import { Toast } from '../common/toasts.js';
 
 // Inside inside public both
-let relativeImagePath = `/`;
-let relativeSignPath = `/`;
+let relativeImagePath = `/pics/_images`;
+let relativeSignPath = `/pics/_sign`;
 
 const contentSection = document.querySelectorAll('.content-section');
 
@@ -31,6 +31,43 @@ let snapshotBlob = null;
 const cropWidth = CROP_WIDTH;
 const cropHeight = CROP_HEIGHT;
 
+// ==============================================================================//
+// batch from local storage
+// ==============================================================================//
+const batchSelectTag = document.getElementById('batch-id');
+if (localStorage.getItem('batch')) {
+    const batch = localStorage.getItem('batch');
+    if (batchSelectTag) {
+        batchSelectTag.value = batch;
+        document.getElementById('batch-number').innerHTML = `${batch}`;
+    } else {
+        console.error('No tag with batch-id not found');
+    }
+}
+
+const serverIpAddressTag = document.getElementById('server-ip-address-name');
+if (localStorage.getItem('serverIpAddress')) {
+    const serverIpAddress = localStorage.getItem('serverIpAddress');
+    if (serverIpAddressTag) {
+        serverIpAddressTag.value = serverIpAddress;
+    } else {
+        console.error('No tag with server-ip-address-name id  found');
+    }
+}
+
+batchSelectTag.addEventListener('change', function (e) {
+    const batch = e.target.value;
+    localStorage.setItem('batch', batch);
+    document.getElementById('batch-number').innerHTML = `${batch}`;
+});
+
+serverIpAddressTag.addEventListener('input', function (e) {
+    localStorage.setItem('serverIpAddress', e.target.value);
+});
+
+// ==============================================================================//
+//End for batch from local storage
+// ==============================================================================//
 // Access the user's camera
 navigator.mediaDevices
     .getUserMedia({ video: true }) // Requests access to the user's camera with video enabled
@@ -150,9 +187,9 @@ const updateStudentDetailsInView = ({
         const batchTotalPresentElement = document.getElementById('batch-present');
         const batchTotalAbsentElement = document.getElementById('batch-absent');
 
-        batchTotalAllotedElement.innerText = batchAttendanceCount?.total_students || 0;
-        batchTotalPresentElement.innerText = batchAttendanceCount?.present_count || 0;
-        batchTotalAbsentElement.innerText = batchAttendanceCount?.attendance_not_marked || 0;
+        batchTotalAllotedElement.innerText = batchAttendanceCount?.batch_total_students || 0;
+        batchTotalPresentElement.innerText = batchAttendanceCount?.batch_present_count || 0;
+        batchTotalAbsentElement.innerText = batchAttendanceCount?.batch_attendance_not_marked || 0;
 
         // const labPcContainer = document.querySelectorAll(".lab-pc-container");
 
@@ -185,30 +222,31 @@ const handleMarkAttendence = async (sendData) => {
             body: sendData,
         });
 
-        const { call, message, data } = await _response.json();
-        const { attendenceCount, batchAttendanceCount, pcDetails } = data;
-        if (call == 1) {
+        const { success, message, data } = await _response.json();
+        const { attendenceCount, batchCount, pcDetails } = data;
+        if (success) {
             Toast.success(message);
             updateStudentDetailsInView({
                 pcDetails,
                 attendenceCount: attendenceCount?.[0] ?? {},
-                batchAttendanceCount: batchAttendanceCount?.[0] ?? {},
+                batchAttendanceCount: batchCount?.[0] ?? {},
                 wasMarkedPresentJust: true,
             });
         }
 
-        if (call == 0) {
+        if (!success) {
             Toast.success(message);
             updateStudentDetailsInView({
                 attendenceCount: attendenceCount[0],
                 pcDetails,
-                batchAttendanceCount: batchAttendanceCount[0],
+                batchAttendanceCount: batchCount[0],
                 wasMarkedPresentJust: true,
             });
         }
     } catch (err) {
-        console.log(`Error while marking the attendence : ${err}`);
-        Toast.error(err?.message);
+        console.error(`Error while marking the attendence : ${err}`);
+
+        Toast.error(err?.message || 'Something went wrong');
     }
 };
 
@@ -229,8 +267,10 @@ function handleSendImageToServer() {
 
     const id = +markPresentBtn.getAttribute('data-studentId');
 
+    const batch = +batchSelectTag.value;
     sendData.set('id', id);
     sendData.set('student_photo', snapshotBlob);
+    sendData.set('batch', batch);
     handleMarkAttendence(sendData);
 }
 
@@ -306,6 +346,7 @@ function showStudentData(_student) {
 
     let student = _student;
 
+    console.log(student);
     const idValue = [
         {
             id: 'name',
@@ -349,8 +390,13 @@ function showStudentData(_student) {
 
     showHideButtons({ show: student.sl_present_status == 2 });
 
-    const studentImageAbsolutePath = `${backendUrl}${relativeImagePath}/${student.sl_image}`;
-    const studentSignAbsolutePath = `${backendUrl}${relativeSignPath}/${student.sl_sign}`;
+    const studentImageAbsolutePath = `${backendUrl}${relativeImagePath}/${
+        student.sl_image?.split('/')[1]
+    }`;
+    const studentSignAbsolutePath = `${backendUrl}${relativeSignPath}/${
+        student.sl_sign?.split('/')[1]
+    }`;
+    console.log(studentImageAbsolutePath, '=studentImageAbsolutePath=');
 
     document.getElementById('student-image').src = studentImageAbsolutePath;
     document.getElementById('student-sign').src = studentSignAbsolutePath;
@@ -376,7 +422,7 @@ function showStudentData(_student) {
 
 const loaderContainerDiv = document.getElementById('btn-loader-container');
 
-const handleFetchStudentDetails = async (id) => {
+const handleFetchStudentDetails = async (id, batch) => {
     try {
         if (isDevMode()) {
             showStudentData(dummyStudentData);
@@ -409,12 +455,12 @@ const handleFetchStudentDetails = async (id) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id }),
+            body: JSON.stringify({ id, batch }),
         });
 
-        const { success, data } = await _response.json();
+        const _resData = await _response.json();
 
-        console.log(data);
+        let { success, data, message } = _resData;
 
         if (success) {
             loaderContainerDiv.style.display = 'none';
@@ -441,9 +487,14 @@ const handleFetchStudentDetails = async (id) => {
                 batchAttendanceCount: batchAttendanceCount?.[0] ?? {},
                 pcDetails: pcDetails && pcDetails.length > 0 ? pcDetails[0] : undefined,
             });
+            return;
         }
+
+        Toast.warning(message || 'No candidate entry found');
+        loaderContainerDiv.style.display = 'none';
     } catch (err) {
-        console.log(`Error while fetching the student details : ${err}`);
+        console.error(`Error while fetching the student details : ${err}`);
+
         loaderContainerDiv.style.display = 'none';
     }
 };
@@ -458,11 +509,17 @@ const searchStudentBtn = document.getElementById('search-btn');
 searchStudentBtn.addEventListener('click', function (e) {
     e.preventDefault();
     const id = +document.getElementById('student-id').value;
+    const batch = +batchSelectTag.value;
     if (!id || isNaN(id)) {
         Toast.warning('Please enter a valid student ID.');
         return;
     }
-    handleFetchStudentDetails(id);
+
+    if (!batch) {
+        Toast.warning('Please select a batch');
+        return;
+    }
+    handleFetchStudentDetails(id, batch);
 });
 
 const studentIdInput = document.getElementById('student-id');
@@ -471,11 +528,17 @@ studentIdInput.addEventListener('keypress', async function (e) {
     if (e.key === 'Enter') {
         e.preventDefault();
         const id = +studentIdInput.value;
+        const batch = +batchSelectTag.value;
+
         if (!id || isNaN(id)) {
             Toast.warning('Please enter a valid student ID.');
             return;
         }
-        await handleFetchStudentDetails(id);
+        if (!batch) {
+            Toast.warning('Please select a batch');
+            return;
+        }
+        handleFetchStudentDetails(id, batch);
     }
 });
 

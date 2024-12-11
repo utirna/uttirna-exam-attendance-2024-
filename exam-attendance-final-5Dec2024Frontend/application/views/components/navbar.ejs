@@ -34,28 +34,49 @@
 
             <!-- Middle input search container -->
             <div>
-                <div class="flex justify-between items-center gap-4">
-                    <div class="input-holder">
-                        <input
-                            type="text"
-                            name="search"
-                            id="student-id"
-                            placeholder="Search candidate..."
-                            autocomplete="off"
-                            class="p-2 outline-none shadow-sm ring-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-12 text-md border border-gray-300 rounded-xl" />
-                    </div>
-                    <div class="button-holder">
-                        <button
-                            type="button"
-                            id="search-btn"
-                            class="relative overflow-hidden inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            <span>Search</span>
-                            <div id="btn-loader-container">
-                                <div class="btn-loader-inside">
-                                    <div id="btn-loader"></div>
+                <div class="flex align-center gap-4">
+                    <select
+                        class="px-4 outline-none shadow-sm ring-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 block text-md border border-gray-300 rounded-xl"
+                        name="batch_id"
+                        id="batch-id"
+                        class="">
+                        <option
+                            class="text-center hover:bg-purple-100 hover:text-black focus:bg-purple-500 focus:text-white"
+                            value="">
+                            --Select Batch--
+                        </option>
+                        <% for (let i = 1; i <= 5; i++) { %>
+                        <option
+                            class="text-center hover:bg-purple-100 hover:text-black focus:bg-purple-500 focus:text-white"
+                            value="<%= i %>">
+                            Batch - <%= i %>
+                        </option>
+                        <% } %>
+                    </select>
+
+                    <div class="flex justify-between items-center gap-4">
+                        <div class="input-holder">
+                            <input
+                                type="text"
+                                name="search"
+                                id="student-id"
+                                placeholder="Search candidate..."
+                                autocomplete="off"
+                                class="p-2 outline-none shadow-sm ring-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-12 text-md border border-gray-300 rounded-xl" />
+                        </div>
+                        <div class="button-holder">
+                            <button
+                                type="button"
+                                id="search-btn"
+                                class="relative overflow-hidden inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <span>Search</span>
+                                <div id="btn-loader-container">
+                                    <div class="btn-loader-inside">
+                                        <div id="btn-loader"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,7 +85,9 @@
 
             <div class="font-semibold text-[#555]">
                 Connected To:
-                <span id="connnected-ip-container" class="inline-block min-w-20 w-fit max-w-40"></span>
+                <span
+                    id="connnected-ip-container"
+                    class="inline-block min-w-20 w-fit max-w-40"></span>
             </div>
         </div>
     </div>
